@@ -1,0 +1,507 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom font families */
+.font-cardo {
+  font-family: "Playfair Display", "Times New Roman", "Georgia", serif;
+}
+
+/* Custom cursor styles */
+* {
+  cursor: none !important;
+}
+
+/* Enhanced cursor visibility for header and all elements */
+.custom-cursor {
+  mix-blend-mode: normal !important;
+  opacity: 1 !important;
+  z-index: 9999 !important;
+}
+
+/* Enhanced cursor animations */
+@keyframes cursor-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+@keyframes cursor-ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Cursor trail effect */
+.cursor-trail {
+  animation: cursor-pulse 2s ease-in-out infinite;
+}
+
+/* Hide default cursor on all elements */
+*,
+*::before,
+*::after {
+  cursor: none !important;
+}
+
+/* Special cursor zones */
+[data-cursor="button"] {
+  position: relative;
+}
+
+[data-cursor="button"]::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+[data-cursor="button"]:hover::before {
+  opacity: 1;
+}
+
+/* Magnetic effect for buttons */
+.magnetic-cursor {
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Smooth cursor movement */
+.cursor-smooth {
+  transition: all 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Cursor variants */
+.cursor-text {
+  background: linear-gradient(45deg, #10b981, #059669) !important;
+}
+
+.cursor-button {
+  background: linear-gradient(45deg, #8b5cf6, #ec4899) !important;
+}
+
+.cursor-link {
+  background: linear-gradient(45deg, #3b82f6, #06b6d4) !important;
+}
+
+/* Glowing effect */
+.cursor-glow {
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+/* Professional card hover effects */
+.professional-card {
+  background: linear-gradient(145deg, rgba(17, 24, 39, 0.8), rgba(31, 41, 55, 0.6));
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(75, 85, 99, 0.3);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.professional-card:hover {
+  background: linear-gradient(145deg, rgba(17, 24, 39, 0.9), rgba(31, 41, 55, 0.8));
+  border-color: rgba(16, 185, 129, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(16, 185, 129, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Professional button styling */
+.professional-button {
+  background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.professional-button:hover {
+  background: linear-gradient(135deg, #047857 0%, #0f766e 100%);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Enhanced navigation styling */
+.nav-link {
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-link::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.nav-link:hover::before {
+  left: 100%;
+}
+
+/* Professional stats cards */
+.stats-card {
+  background: linear-gradient(145deg, rgba(31, 41, 55, 0.8), rgba(17, 24, 39, 0.9));
+  border: 1px solid rgba(75, 85, 99, 0.2);
+  backdrop-filter: blur(15px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stats-card:hover {
+  background: linear-gradient(145deg, rgba(31, 41, 55, 0.9), rgba(17, 24, 39, 1));
+  border-color: rgba(16, 185, 129, 0.3);
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(16, 185, 129, 0.1);
+}
+
+/* Sophisticated testimonial cards */
+.testimonial-card {
+  background: linear-gradient(145deg, rgba(17, 24, 39, 0.95), rgba(31, 41, 55, 0.8));
+  border: 1px solid rgba(75, 85, 99, 0.3);
+  backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+}
+
+.testimonial-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.5), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.testimonial-card:hover::before {
+  opacity: 1;
+}
+
+/* Professional form styling */
+.professional-form input,
+.professional-form textarea {
+  background: rgba(31, 41, 55, 0.8);
+  border: 1px solid rgba(75, 85, 99, 0.4);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.professional-form input:focus,
+.professional-form textarea:focus {
+  background: rgba(31, 41, 55, 0.9);
+  border-color: rgba(16, 185, 129, 0.5);
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1), 0 4px 15px rgba(16, 185, 129, 0.1);
+}
+
+/* Responsive cursor adjustments */
+@media (max-width: 768px) {
+  *,
+  *::before,
+  *::after {
+    cursor: auto !important;
+  }
+
+  .custom-cursor {
+    display: none !important;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .custom-cursor,
+  .professional-card,
+  .professional-button,
+  .stats-card,
+  .testimonial-card {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .professional-card {
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  .custom-cursor {
+    background: white !important;
+    border: 2px solid black !important;
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Line clamp utilities */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Custom animations */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Focus styles for accessibility */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 2px;
+}
+
+/* Loading states */
+.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Responsive design helpers */
+@media (max-width: 768px) {
+  .text-7xl {
+    font-size: 3rem;
+    line-height: 1.1;
+  }
+
+  .text-6xl {
+    font-size: 2.5rem;
+    line-height: 1.1;
+  }
+
+  .px-16 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .py-24 {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+
+  .hidden-reveal-image {
+    width: 90%;
+    height: auto;
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  .hidden-reveal-image {
+    width: 80%;
+    height: auto;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* Hidden image reveal animations */
+.hidden-reveal-trigger {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.hidden-reveal-trigger:hover {
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+.hidden-reveal-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.95);
+  opacity: 0;
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  filter: grayscale(100%) contrast(1.2) brightness(0.8);
+  mix-blend-mode: overlay;
+  z-index: -1;
+}
+
+.hidden-reveal-image.visible {
+  opacity: 0.4;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Enhanced text hover effects */
+.hover-glow {
+  transition: all 0.3s ease;
+}
+
+.hover-glow:hover {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3), 0 0 30px rgba(255, 255, 255, 0.1);
+}
+
+/* Additional smooth transitions for better UX */
+.smooth-reveal {
+  transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.7s cubic-bezier(0.4, 0, 0.2, 1), filter 0.3s ease;
+}
+
+/* Subtle pulsing effect for the trigger word */
+@keyframes subtle-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.pulse-on-hover:hover {
+  animation: subtle-pulse 2s ease-in-out infinite;
+}
+
+/* Scroll line animation */
+@keyframes scrollLine {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.scroll-line-animation {
+  background: linear-gradient(90deg, transparent 0%, #10b981 25%, #06b6d4 50%, #8b5cf6 75%, transparent 100%);
+  background-size: 200% 100%;
+  animation: scrollLine 1.5s ease-out forwards, shimmer 1.5s ease-out infinite;
+}
+
+/* Enhanced cursor visibility */
+.custom-cursor {
+  mix-blend-mode: normal !important;
+  opacity: 1 !important;
+}
+
+/* Pulse animation for contact badge */
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 5px rgba(16, 185, 129, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.8), 0 0 30px rgba(16, 185, 129, 0.4);
+  }
+}
+
+.animate-pulse {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
