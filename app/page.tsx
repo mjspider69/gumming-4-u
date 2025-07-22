@@ -685,8 +685,7 @@ export default function Component() {
                 className="bg-white text-black hover:bg-gray-200 px-10 py-5 text-xl font-semibold hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-white/30"
               >
                 Get Free Consultation <ArrowRight className="ml-3 w-5 h-5" />
-              </Button>
-            </Link>
+              </Button            </Link>
             <Link href="/portfolio">
               <Button
                 size="lg"
