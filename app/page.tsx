@@ -30,6 +30,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { trackServiceInquiry } from "@/components/analytics"
 import { Chatbot } from "@/components/chatbot"
+import { Enhanced3DBackground } from "@/components/enhanced-3d-background"
 
 // Enhanced Custom cursor with black/white theme
 function CustomCursor() {
@@ -447,19 +448,8 @@ export default function Component() {
 
       {/* Full-Width Hero Section */}
       <section className="min-h-screen bg-black relative overflow-hidden">
-        {/* 3D Background */}
-        <div className="absolute inset-0 z-0">
-          <Canvas camera={{ position: [0, 0, 8], fov: 75 }}>
-            <Suspense fallback={null}>
-              <Environment preset="night" />
-              <ambientLight intensity={0.4} />
-              <pointLight position={[5, 5, 5]} intensity={0.8} />
-              <Hero3D />
-              <FloatingElements />
-              <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.5} />
-            </Suspense>
-          </Canvas>
-        </div>
+        {/* Enhanced 3D Background */}
+        <Enhanced3DBackground variant="complex" showText={true} text="G4U" />
 
         {/* Content Container */}
         <div className="relative z-10 flex items-center justify-center min-h-screen px-16">

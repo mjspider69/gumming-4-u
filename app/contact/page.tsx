@@ -1,8 +1,8 @@
-
 "use client"
 import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Enhanced3DBackground } from "@/components/enhanced-3d-background"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardContent } from "@/components/ui/card"
@@ -226,7 +226,7 @@ export default function ContactPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
+
     // Send email logic would go here
     const emailContent = `
       New Contact Form Submission:
@@ -237,10 +237,10 @@ export default function ContactPage() {
       Service: ${formData.service}
       Message: ${formData.message}
     `
-    
+
     // For now, we'll just show an alert
     alert("Thank you for your message! We'll get back to you soon.")
-    
+
     // Reset form
     setFormData({
       name: "",
@@ -261,6 +261,7 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen bg-black text-white" style={{ cursor: "none" }}>
+      <Enhanced3DBackground />
       <CustomCursor />
       <Navigation />
 

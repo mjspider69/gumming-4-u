@@ -1,8 +1,8 @@
-
 "use client"
 import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Enhanced3DBackground } from "@/components/enhanced-3d-background"
 import { Card, CardContent } from "@/components/ui/card"
 import {
   ArrowRight,
@@ -302,6 +302,7 @@ export default function PortfolioPage() {
 
   return (
     <div className="min-h-screen bg-black text-white" style={{ cursor: "none" }}>
+      <Enhanced3DBackground />
       <CustomCursor />
       <Navigation />
 

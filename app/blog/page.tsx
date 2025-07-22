@@ -1,8 +1,8 @@
-
 import type { Metadata } from "next"
 import { Badge } from "@/components/ui/badge"
 import Navigation from "@/components/navigation"
 import CustomCursor from "@/components/custom-cursor"
+import { Enhanced3DBackground } from "@/components/enhanced-3d-background"
 
 export const metadata: Metadata = {
   title: "Digital Marketing Blog | Gumming4U - Latest SEO, PPC & Marketing Tips",
@@ -37,6 +37,7 @@ export default function Blog() {
 
   return (
     <div className="min-h-screen bg-black text-white" style={{ cursor: "none" }}>
+      <Enhanced3DBackground />
       <CustomCursor />
       <Navigation />
 

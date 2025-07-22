@@ -1,8 +1,8 @@
-
 "use client"
 import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Enhanced3DBackground } from "@/components/enhanced-3d-background"
 import { CheckCircle, Mail, Phone, Globe, ArrowRight, Instagram, Linkedin, Twitter } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -195,6 +195,7 @@ function Navigation() {
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-black text-white" style={{ cursor: "none" }}>
+      <Enhanced3DBackground />
       <CustomCursor />
       <Navigation />
 
@@ -291,7 +292,7 @@ export default function AboutPage() {
                   that drive real, measurable results. Our team combines creativity with data-driven insights to create
                   campaigns that not only look great but deliver exceptional ROI.
                 </p>
-                
+
                 <h4 className="text-2xl font-bold mb-6 text-white">OUR VALUES</h4>
                 <ul className="space-y-4">
                   <li className="flex items-center">
