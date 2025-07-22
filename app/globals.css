@@ -522,6 +522,233 @@ textarea:focus-visible {
   opacity: 1 !important;
 }
 
+/* Extraordinary animations */
+@keyframes floating {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-30px) rotate(5deg); }
+  66% { transform: translateY(-15px) rotate(-3deg); }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { 
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3),
+                0 0 40px rgba(255, 255, 255, 0.2),
+                0 0 60px rgba(255, 255, 255, 0.1);
+  }
+  50% { 
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.5),
+                0 0 60px rgba(255, 255, 255, 0.3),
+                0 0 90px rgba(255, 255, 255, 0.2);
+  }
+}
+
+@keyframes text-reveal {
+  0% { 
+    opacity: 0;
+    transform: translateY(50px) rotateX(90deg);
+  }
+  100% { 
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg);
+  }
+}
+
+@keyframes magnetic-pull {
+  0% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.05) rotate(2deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+/* Magnetic button effects */
+[data-magnetic] {
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  cursor: none;
+}
+
+[data-magnetic]:hover {
+  animation: magnetic-pull 0.6s ease-out infinite;
+}
+
+/* Enhanced card hover effects */
+.extraordinary-card {
+  background: linear-gradient(145deg, rgba(0, 0, 0, 0.9), rgba(17, 17, 17, 0.8));
+  backdrop-filter: blur(20px);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.extraordinary-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  background: linear-gradient(45deg, #fff, #666, #fff, #666);
+  border-radius: inherit;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  animation: shimmer 3s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.extraordinary-card:hover::before {
+  opacity: 0.8;
+}
+
+.extraordinary-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Glowing text effect */
+.glow-text {
+  animation: glow-pulse 2s ease-in-out infinite;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Floating animation for elements */
+.float-animation {
+  animation: floating 6s ease-in-out infinite;
+}
+
+/* Enhanced button effects */
+.extraordinary-button {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
+  border: 2px solid transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.extraordinary-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.5s;
+}
+
+.extraordinary-button:hover::before {
+  left: 100%;
+}
+
+.extraordinary-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+/* 3D text effect */
+.text-3d {
+  text-shadow: 
+    1px 1px 0 rgba(255, 255, 255, 0.5),
+    2px 2px 0 rgba(255, 255, 255, 0.4),
+    3px 3px 0 rgba(255, 255, 255, 0.3),
+    4px 4px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Neon glow effect */
+.neon-glow {
+  text-shadow: 
+    0 0 5px #fff,
+    0 0 10px #fff,
+    0 0 20px #fff,
+    0 0 40px #fff;
+  animation: glow-pulse 1.5s ease-in-out infinite alternate;
+}
+
+/* Perspective text animation */
+.perspective-text {
+  transform-style: preserve-3d;
+  animation: text-reveal 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Enhanced scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #fff, #666);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #ccc, #999);
+}
+
+/* Loading spinner for extraordinary effect */
+.extraordinary-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Parallax scrolling effect */
+.parallax-element {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+/* Enhanced focus states for accessibility */
+*:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .extraordinary-card:hover {
+    transform: none;
+  }
+  
+  [data-magnetic]:hover {
+    animation: none;
+  }
+  
+  .floating,
+  .float-animation {
+    animation: none;
+  }
+}
+
+/* High performance mode */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 /* Pulse animation for contact badge */
 @keyframes pulse-glow {
   0%,

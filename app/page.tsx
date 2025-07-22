@@ -1,4 +1,3 @@
-javascript
 "use client"
 
 import { Canvas } from "@react-three/fiber"
@@ -31,6 +30,19 @@ import Link from "next/link"
 import { trackServiceInquiry } from "@/components/analytics"
 import { Chatbot } from "@/components/chatbot"
 import { Enhanced3DBackground } from "@/components/enhanced-3d-background"
+import { 
+  TypingAnimation, 
+  WordReveal, 
+  CharacterReveal, 
+  GlitchText, 
+  MorphingText, 
+  GradientText, 
+  BounceText, 
+  SlideUpText, 
+  StaggerText 
+} from "@/components/text-animations"
+import { AdvancedCursor } from "@/components/advanced-cursor"
+import { ParticleSystem } from "@/components/particle-effects"
 
 // Enhanced Custom cursor with black/white theme
 function CustomCursor() {
@@ -442,7 +454,8 @@ export default function Component() {
 
   return (
     <div className="min-h-screen bg-black text-white overflow-hidden" style={{ cursor: "none" }}>
-      <CustomCursor />
+      <AdvancedCursor />
+      <ParticleSystem />
       <Navigation />
       <Chatbot />
 
@@ -456,22 +469,26 @@ export default function Component() {
           <div className="max-w-7xl mx-auto text-center">
             {/* Main Heading with Team Image Reveal */}
             <div className="relative mb-12">
-              <h1 
+              <div 
                 className="text-8xl font-black leading-tight mb-8 transition-all duration-700 ease-out"
                 style={{ opacity: showTeamImage ? 0.2 : 1 }}
                 onMouseEnter={() => setShowTeamImage(true)}
                 onMouseLeave={() => setShowTeamImage(false)}
                 data-cursor="text"
               >
-                LOOKING FOR
-                <br />
-                THE{" "}
-                <span className="text-gray-400 hover:text-white transition-colors duration-500">
-                  EXTRA
-                </span>
-                <br />
-                IN THE <span className="text-gray-400">ORDINARY</span>
-              </h1>
+                <GlitchText text="LOOKING FOR" className="block" />
+                <div className="flex items-center justify-center gap-4">
+                  <span>THE</span>
+                  <MorphingText 
+                    texts={["EXTRA", "MAGIC", "SPARK", "EDGE", "POWER"]} 
+                    className="text-gray-400 hover:text-white transition-colors duration-500 min-w-[200px]"
+                  />
+                </div>
+                <div className="flex items-center justify-center gap-4">
+                  <span>IN THE</span>
+                  <GradientText text="ORDINARY" className="text-gray-400" />
+                </div>
+              </div>
 
               {/* Team Image Reveal */}
               <div
@@ -492,30 +509,39 @@ export default function Component() {
               </div>
             </div>
 
-            <p className="text-3xl mb-10 font-light">We don't market. We make movements.</p>
+            <TypingAnimation 
+              text="We don't market. We make movements." 
+              className="text-3xl mb-10 font-light block"
+              speed={80}
+            />
 
-            <p className="text-xl mb-16 text-gray-300 leading-relaxed max-w-4xl mx-auto">
-              Transform your business with data-driven digital marketing strategies that deliver measurable results.
-              From SEO to social media, we're your growth partners in the digital revolution.
-            </p>
+            <WordReveal 
+              text="Transform your business with data-driven digital marketing strategies that deliver measurable results. From SEO to social media, we're your growth partners in the digital revolution."
+              className="text-xl mb-16 text-gray-300 leading-relaxed max-w-4xl mx-auto"
+              delay={0.08}
+            />
 
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Link href="/contact">
                 <Button
                   size="lg"
-                  className="bg-white text-black hover:bg-gray-200 px-10 py-5 text-xl font-semibold hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-white/30"
+                  className="bg-white text-black hover:bg-gray-200 px-10 py-5 text-xl font-semibold hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-white/30 relative overflow-hidden group"
                   onClick={() => trackServiceInquiry("free_audit")}
+                  data-magnetic
                 >
-                  Get Free Marketing Audit <ArrowRight className="ml-3 w-5 h-5" />
+                  <span className="relative z-10">Get Free Marketing Audit <ArrowRight className="ml-3 w-5 h-5 inline-block" /></span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
                 </Button>
               </Link>
               <Link href="/portfolio">
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-3 border-white text-white hover:bg-white hover:text-black px-10 py-5 text-xl font-semibold bg-transparent hover:scale-105 transition-all duration-300"
+                  className="border-3 border-white text-white hover:bg-white hover:text-black px-10 py-5 text-xl font-semibold bg-transparent hover:scale-105 transition-all duration-300 relative overflow-hidden group"
+                  data-magnetic
                 >
-                  View Our Work
+                  <span className="relative z-10">View Our Work</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
                 </Button>
               </Link>
             </div>
@@ -550,10 +576,15 @@ export default function Component() {
         <div className="relative z-10 max-w-7xl mx-auto">
           <div className="text-center mb-20">
             <Badge className="bg-white/20 text-white px-6 py-3 text-sm mb-8 rounded-full">What We Do</Badge>
-            <h2 className="text-7xl font-black mb-10">OUR SERVICES</h2>
-            <p className="text-2xl text-gray-300 max-w-4xl mx-auto">
-              Comprehensive digital marketing solutions designed to elevate your brand and drive measurable growth
-            </p>
+            <CharacterReveal 
+              text="OUR SERVICES" 
+              className="text-7xl font-black mb-10"
+              delay={0.1}
+            />
+            <StaggerText 
+              text="Comprehensive digital marketing solutions designed to elevate your brand and drive measurable growth"
+              className="text-2xl text-gray-300 max-w-4xl mx-auto"
+            />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -568,18 +599,16 @@ export default function Component() {
                     <div className="mb-6">
                       {service.vector}
                     </div>
-                    <h3 className="text-xl font-bold mb-6 text-white group-hover:text-white transition-colors duration-500">
-                      {service.title}
-                      {service.subtitle && (
-                        <>
-                          <br />
-                          <span className="text-gray-400 group-hover:text-gray-300">{service.subtitle}</span>
-                        </>
-                      )}
-                    </h3>
-                    <p className="text-sm text-gray-400 group-hover:text-gray-300 leading-relaxed transition-colors duration-500">
-                      {service.description}
-                    </p>
+                    <SlideUpText 
+                      text={`${service.title}${service.subtitle ? ` ${service.subtitle}` : ''}`}
+                      className="text-xl font-bold mb-6 text-white group-hover:text-white transition-colors duration-500"
+                      delay={0.2}
+                    />
+                    <WordReveal 
+                      text={service.description}
+                      className="text-sm text-gray-400 group-hover:text-gray-300 leading-relaxed transition-colors duration-500"
+                      delay={0.05}
+                    />
                   </div>
                 </div>
               </Link>
@@ -606,7 +635,11 @@ export default function Component() {
             <Badge className="bg-white/20 text-white px-6 py-3 text-sm mb-8 rounded-full">
               Client Love
             </Badge>
-            <h2 className="text-7xl font-black mb-10">TESTIMONIALS</h2>
+            <BounceText 
+              text="TESTIMONIALS" 
+              className="text-7xl font-black mb-10"
+              delay={0.15}
+            />
           </div>
 
           <div className="grid md:grid-cols-3 gap-10">
@@ -636,10 +669,15 @@ export default function Component() {
       {/* Enhanced CTA Section */}
       <section className="py-32 px-16 bg-black">
         <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-6xl font-black mb-10">Ready to Transform Your Business?</h2>
-          <p className="text-2xl text-gray-400 mb-16">
-            Let's discuss how we can help you achieve extraordinary growth through strategic digital marketing.
-          </p>
+          <GlitchText 
+            text="Ready to Transform Your Business?" 
+            className="text-6xl font-black mb-10 block"
+          />
+          <SlideUpText 
+            text="Let's discuss how we can help you achieve extraordinary growth through strategic digital marketing."
+            className="text-2xl text-gray-400 mb-16"
+            delay={0.3}
+          />
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link href="/contact">
               <Button
