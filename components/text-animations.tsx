@@ -62,7 +62,7 @@ export function WordReveal({
     <motion.div ref={ref} className={className}>
       {words.map((word, wordIndex) => (
         <motion.span
-          key={`word-${wordIndex}-${word}`}
+          key={`word-${wordIndex}-${word}-${text.slice(0, 10)}`}
           className="inline-block mr-2"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -93,7 +93,7 @@ export function CharacterReveal({
     <motion.div ref={ref} className={className}>
       {characters.map((char, index) => (
         <motion.span
-          key={`char-${index}-${char}`}
+          key={`char-${index}-${char}-${text.slice(0, 5)}-${index}`}
           initial={{ opacity: 0, rotateY: 90 }}
           animate={isInView ? { opacity: 1, rotateY: 0 } : { opacity: 0, rotateY: 90 }}
           transition={{ duration: 0.4, delay: delay * index }}
@@ -229,7 +229,7 @@ export function BounceText({
     <motion.div className={className}>
       {letters.map((letter, index) => (
         <motion.span
-          key={index}
+          key={`bounce-${index}-${letter}-${text.slice(0, 3)}`}
           animate={{
             y: [0, -10, 0],
           }}
@@ -290,7 +290,7 @@ export function StaggerText({
     <motion.div ref={ref} className={className}>
       {words.map((word, index) => (
         <motion.span
-          key={index}
+          key={`stagger-${index}-${word}-${text.slice(0, 5)}`}
           initial={{ opacity: 0, scale: 0.5 }}
           animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.5 }}
           transition={{
