@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useEffect, useRef } from "react"
@@ -35,7 +34,7 @@ export function ParticleSystem() {
     const createParticle = (x: number, y: number) => {
       const angle = Math.random() * Math.PI * 2
       const speed = Math.random() * 2 + 1
-      
+
       return {
         x,
         y,
@@ -55,14 +54,14 @@ export function ParticleSystem() {
         particle.y += particle.vy
         particle.vy += 0.05 // gravity
         particle.opacity = 1 - (particle.life / particle.maxLife)
-        
+
         return particle.life < particle.maxLife
       })
     }
 
     const drawParticles = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height)
-      
+
       particlesRef.current.forEach(particle => {
         ctx.save()
         ctx.globalAlpha = particle.opacity
@@ -84,7 +83,7 @@ export function ParticleSystem() {
 
     const handleMouseMove = (e: MouseEvent) => {
       mouseRef.current = { x: e.clientX, y: e.clientY }
-      
+
       // Create particles on mouse move
       if (Math.random() < 0.3) {
         particlesRef.current.push(createParticle(e.clientX, e.clientY))
@@ -102,7 +101,7 @@ export function ParticleSystem() {
     window.addEventListener("resize", resizeCanvas)
     window.addEventListener("mousemove", handleMouseMove)
     window.addEventListener("click", handleClick)
-    
+
     animate()
 
     return () => {

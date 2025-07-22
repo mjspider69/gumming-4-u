@@ -1,4 +1,3 @@
-
 "use client"
 
 import { Canvas } from "@react-three/fiber"
@@ -37,45 +36,45 @@ function FloatingGeometry() {
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime()
-    
+
     if (sphereRef.current) {
       sphereRef.current.rotation.x = time * 0.3
       sphereRef.current.rotation.y = time * 0.2
       sphereRef.current.position.y = Math.sin(time * 0.5) * 2
     }
-    
+
     if (boxRef.current) {
       boxRef.current.rotation.x = time * 0.4
       boxRef.current.rotation.z = time * 0.3
       boxRef.current.position.x = Math.cos(time * 0.3) * 3
     }
-    
+
     if (torusRef.current) {
       torusRef.current.rotation.y = time * 0.5
       torusRef.current.position.z = Math.sin(time * 0.4) * 2
     }
-    
+
     if (icosahedronRef.current) {
       icosahedronRef.current.rotation.x = time * 0.2
       icosahedronRef.current.rotation.y = time * 0.4
       icosahedronRef.current.position.y = Math.cos(time * 0.6) * 1.5
     }
-    
+
     if (octahedronRef.current) {
       octahedronRef.current.rotation.z = time * 0.3
       octahedronRef.current.position.x = Math.sin(time * 0.5) * 2.5
     }
-    
+
     if (coneRef.current) {
       coneRef.current.rotation.y = time * 0.6
       coneRef.current.position.z = Math.cos(time * 0.4) * 3
     }
-    
+
     if (cylinderRef.current) {
       cylinderRef.current.rotation.x = time * 0.4
       cylinderRef.current.position.y = Math.sin(time * 0.7) * 1.8
     }
-    
+
     if (ringRef.current) {
       ringRef.current.rotation.z = time * 0.5
       ringRef.current.rotation.x = time * 0.3
@@ -192,7 +191,7 @@ function FloatingGeometry() {
 // Particle system
 function ParticleField() {
   const particlesRef = useRef<THREE.Points>(null)
-  
+
   useFrame((state) => {
     if (particlesRef.current) {
       particlesRef.current.rotation.y = state.clock.getElapsedTime() * 0.05
@@ -201,7 +200,7 @@ function ParticleField() {
 
   const particleCount = 1000
   const positions = new Float32Array(particleCount * 3)
-  
+
   for (let i = 0; i < particleCount; i++) {
     positions[i * 3] = (Math.random() - 0.5) * 50
     positions[i * 3 + 1] = (Math.random() - 0.5) * 50
@@ -237,7 +236,7 @@ function BackgroundPlanes() {
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime()
-    
+
     if (planeRef1.current) {
       planeRef1.current.rotation.z = Math.sin(time * 0.2) * 0.1
     }
@@ -259,7 +258,7 @@ function BackgroundPlanes() {
           side={THREE.DoubleSide}
         />
       </Plane>
-      
+
       <Plane ref={planeRef2} args={[15, 15]} position={[-8, 0, -8]} rotation={[0, Math.PI / 4, 0]}>
         <meshStandardMaterial
           color="#ffffff"
@@ -268,7 +267,7 @@ function BackgroundPlanes() {
           side={THREE.DoubleSide}
         />
       </Plane>
-      
+
       <Plane ref={planeRef3} args={[15, 15]} position={[8, 0, -8]} rotation={[0, -Math.PI / 4, 0]}>
         <meshStandardMaterial
           color="#666666"

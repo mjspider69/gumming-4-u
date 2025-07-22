@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useEffect, useRef, useState } from "react"
@@ -61,13 +60,13 @@ export function WordReveal({
 
   return (
     <motion.div ref={ref} className={className}>
-      {words.map((word, index) => (
+      {words.map((word, wordIndex) => (
         <motion.span
-          key={index}
+          key={`word-${wordIndex}-${word}`}
+          className="inline-block mr-2"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6, delay: delay * index }}
-          className="inline-block mr-2"
+          transition={{ duration: 0.6, delay: delay * wordIndex }}
         >
           {word}
         </motion.span>
@@ -94,7 +93,7 @@ export function CharacterReveal({
     <motion.div ref={ref} className={className}>
       {characters.map((char, index) => (
         <motion.span
-          key={index}
+          key={`char-${index}-${char}`}
           initial={{ opacity: 0, rotateY: 90 }}
           animate={isInView ? { opacity: 1, rotateY: 0 } : { opacity: 0, rotateY: 90 }}
           transition={{ duration: 0.4, delay: delay * index }}
@@ -225,7 +224,7 @@ export function BounceText({
   delay?: number
 }) {
   const letters = text.split("")
-  
+
   return (
     <motion.div className={className}>
       {letters.map((letter, index) => (
