@@ -2,29 +2,20 @@
 "use client"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { Card, CardContent } from "@/components/ui/card"
 import {
   ArrowRight,
   Mail,
-  Camera,
-  Palette,
-  Bot,
-  Globe,
-  Monitor,
-  FileText,
-  ShoppingCart,
-  Grid3X3,
-  CheckCircle,
   Phone,
+  Globe,
   Instagram,
   Linkedin,
   Twitter,
-  Zap,
-  Target,
-  TrendingUp,
-  Layers,
-  Megaphone,
+  ExternalLink,
+  Calendar,
+  Users,
+  Award,
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -172,8 +163,8 @@ function Navigation() {
             {[
               { href: "/", label: "Home" },
               { href: "/about", label: "About" },
-              { href: "/services", label: "Services", active: true },
-              { href: "/portfolio", label: "Portfolio" },
+              { href: "/services", label: "Services" },
+              { href: "/portfolio", label: "Portfolio", active: true },
               { href: "/careers", label: "Careers" },
               { href: "/contact", label: "Contact" },
             ].map((item) => (
@@ -212,71 +203,101 @@ function Navigation() {
   )
 }
 
-export default function ServicesPage() {
-  const services = [
+export default function PortfolioPage() {
+  const executives = [
     {
-      icon: Globe,
-      title: "Social Media Management",
-      description: "Strategic social media campaigns that drive engagement and build communities across all platforms.",
-      features: ["Content Strategy", "Community Management", "Paid Social Advertising", "Analytics & Reporting"],
-      vectorIcon: <Megaphone className="w-16 h-16 text-white mb-4" />,
+      name: "Aryaan Alam",
+      role: "Managing Director",
+      department: "Leadership & Strategy",
+      image: "/placeholder.svg?height=400&width=300&text=Aryaan+Alam+MD",
+      bio: "Visionary leader driving Gumming4U's strategic direction and innovation in digital marketing.",
+      specialties: ["Strategic Planning", "Client Relations", "Business Development"]
     },
     {
-      icon: Monitor,
-      title: "Website Development",
-      description: "Custom websites optimized for conversions and user experience with modern design principles.",
-      features: ["Responsive Design", "SEO Optimization", "Performance Optimization", "CMS Integration"],
-      vectorIcon: <Layers className="w-16 h-16 text-white mb-4" />,
+      name: "Sarah Johnson",
+      role: "Creative Director",
+      department: "Creative & Design",
+      image: "/placeholder.svg?height=400&width=300&text=Sarah+Johnson+CD",
+      bio: "Award-winning creative director with 10+ years of experience in brand storytelling.",
+      specialties: ["Brand Identity", "Creative Strategy", "Visual Design"]
     },
     {
-      icon: Camera,
-      title: "Content Creation",
-      description: "Professional photography, videography, and creative content production for your brand.",
-      features: ["Photography", "Video Production", "Graphic Design", "Brand Assets"],
-      vectorIcon: <Camera className="w-16 h-16 text-white mb-4" />,
+      name: "Michael Chen",
+      role: "Head of Digital Strategy",
+      department: "Digital Marketing",
+      image: "/placeholder.svg?height=400&width=300&text=Michael+Chen+HDS",
+      bio: "Data-driven strategist specializing in performance marketing and ROI optimization.",
+      specialties: ["PPC Management", "Analytics", "Conversion Optimization"]
     },
     {
-      icon: FileText,
-      title: "SEO & Copywriting",
-      description: "Search-optimized content that ranks and converts visitors into customers.",
-      features: ["Keyword Research", "Content Writing", "Technical SEO", "Link Building"],
-      vectorIcon: <TrendingUp className="w-16 h-16 text-white mb-4" />,
+      name: "Priya Sharma",
+      role: "Head of Content",
+      department: "Content & SEO",
+      image: "/placeholder.svg?height=400&width=300&text=Priya+Sharma+HC",
+      bio: "Content strategist with expertise in SEO and organic growth strategies.",
+      specialties: ["Content Strategy", "SEO", "Copywriting"]
     },
     {
-      icon: ShoppingCart,
-      title: "E-commerce Solutions",
-      description: "Complete online store setup and optimization for maximum sales and conversions.",
-      features: ["Store Setup", "Product Optimization", "Payment Integration", "Inventory Management"],
-      vectorIcon: <ShoppingCart className="w-16 h-16 text-white mb-4" />,
+      name: "David Wilson",
+      role: "Technical Director",
+      department: "Development & Tech",
+      image: "/placeholder.svg?height=400&width=300&text=David+Wilson+TD",
+      bio: "Full-stack developer and technical architect behind our digital solutions.",
+      specialties: ["Web Development", "E-commerce", "Technical SEO"]
     },
     {
-      icon: Grid3X3,
-      title: "PPC Advertising",
-      description: "Data-driven paid advertising campaigns across Google, Facebook, and LinkedIn.",
-      features: ["Campaign Strategy", "Ad Creation", "Bid Management", "Performance Tracking"],
-      vectorIcon: <Target className="w-16 h-16 text-white mb-4" />,
+      name: "Emma Rodriguez",
+      role: "Head of Social Media",
+      department: "Social & Community",
+      image: "/placeholder.svg?height=400&width=300&text=Emma+Rodriguez+HSM",
+      bio: "Social media expert with a passion for building engaged online communities.",
+      specialties: ["Social Strategy", "Community Management", "Influencer Relations"]
+    }
+  ]
+
+  const portfolioItems = [
+    {
+      title: "E-commerce Revolution",
+      category: "E-commerce Development",
+      description: "Complete digital transformation for a fashion retailer resulting in 300% sales increase.",
+      image: "/placeholder.svg?height=400&width=600&text=E-commerce+Project",
+      results: ["300% Sales Increase", "50% Conversion Rate Improvement", "40% Reduced Cart Abandonment"]
     },
     {
-      icon: Mail,
-      title: "Email Marketing",
-      description: "Automated email sequences that nurture leads and drive repeat business.",
-      features: ["Email Automation", "List Building", "Template Design", "A/B Testing"],
-      vectorIcon: <Mail className="w-16 h-16 text-white mb-4" />,
+      title: "Tech Startup Growth",
+      category: "Digital Marketing Campaign",
+      description: "Comprehensive marketing strategy that took a SaaS startup from 0 to 100K users.",
+      image: "/placeholder.svg?height=400&width=600&text=Tech+Startup+Growth",
+      results: ["100K+ Users Acquired", "200% ROI on Ad Spend", "85% User Retention Rate"]
     },
     {
-      icon: Bot,
-      title: "Marketing Automation",
-      description: "AI-powered tools to streamline your marketing processes and improve ROI.",
-      features: ["Workflow Automation", "Lead Scoring", "CRM Integration", "Analytics Dashboard"],
-      vectorIcon: <Bot className="w-16 h-16 text-white mb-4" />,
+      title: "Restaurant Chain Expansion",
+      category: "Brand Strategy & Social Media",
+      description: "Multi-channel brand campaign that helped expand restaurant presence nationwide.",
+      image: "/placeholder.svg?height=400&width=600&text=Restaurant+Campaign",
+      results: ["25 New Locations", "150% Social Engagement", "60% Brand Awareness Increase"]
     },
     {
-      icon: Palette,
-      title: "Brand Strategy",
-      description: "Complete brand identity development and strategic positioning in the market.",
-      features: ["Brand Identity", "Logo Design", "Brand Guidelines", "Market Positioning"],
-      vectorIcon: <Zap className="w-16 h-16 text-white mb-4" />,
+      title: "Healthcare Digital Transformation",
+      category: "Website & SEO",
+      description: "Modern website design and SEO strategy for healthcare provider network.",
+      image: "/placeholder.svg?height=400&width=600&text=Healthcare+Website",
+      results: ["500% Organic Traffic Growth", "40% More Appointments", "90% Patient Satisfaction"]
     },
+    {
+      title: "B2B Lead Generation",
+      category: "PPC & Content Marketing",
+      description: "Targeted campaign generating high-quality leads for manufacturing company.",
+      image: "/placeholder.svg?height=400&width=600&text=B2B+Lead+Generation",
+      results: ["400% Lead Quality Improvement", "60% Cost Per Lead Reduction", "250% ROI Achievement"]
+    },
+    {
+      title: "Non-Profit Awareness Campaign",
+      category: "Social Impact Marketing",
+      description: "Emotional storytelling campaign that increased donations and volunteer engagement.",
+      image: "/placeholder.svg?height=400&width=600&text=Non+Profit+Campaign",
+      results: ["180% Donation Increase", "300% Volunteer Sign-ups", "50M+ Impressions Generated"]
+    }
   ]
 
   return (
@@ -287,51 +308,58 @@ export default function ServicesPage() {
       {/* Hero Section */}
       <section className="pt-20 pb-32 px-16 bg-black">
         <div className="max-w-7xl mx-auto text-center">
-          <Badge className="bg-white/20 text-white px-6 py-3 text-sm mb-8 rounded-full">What We Do</Badge>
-          <h1 className="text-7xl font-black mb-12">OUR SERVICES</h1>
+          <Badge className="bg-white/20 text-white px-6 py-3 text-sm mb-8 rounded-full">Our Work</Badge>
+          <h1 className="text-7xl font-black mb-12">PORTFOLIO</h1>
           <p className="text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-            Comprehensive digital marketing solutions designed to elevate your brand and drive measurable growth across
-            all channels.
+            Discover our exceptional work and meet the brilliant minds behind Gumming4U's success stories.
           </p>
         </div>
       </section>
 
-      {/* Services Grid */}
+      {/* Executive Team Section */}
       <section className="py-32 px-16 bg-gray-900/30">
         <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-20">
+            <Badge className="bg-white/20 text-white px-6 py-3 text-sm mb-8 rounded-full">Leadership Team</Badge>
+            <h2 className="text-6xl font-black mb-10">MEET THE EXECUTIVES</h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Our department heads and senior leadership team driving innovation and excellence.
+            </p>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-            {services.map((service, index) => (
+            {executives.map((executive, index) => (
               <Card
                 key={index}
-                className="bg-black/80 border border-gray-700 hover:border-white/50 transition-all duration-700 group hover:scale-105 hover:shadow-2xl hover:shadow-white/20 backdrop-blur-lg"
+                className="bg-black/80 border border-gray-700 hover:border-white/50 transition-all duration-700 group hover:scale-105 hover:shadow-2xl hover:shadow-white/20 backdrop-blur-lg overflow-hidden"
               >
-                <CardContent className="p-10">
-                  <div className="text-center mb-8">
-                    {service.vectorIcon}
+                <CardContent className="p-0">
+                  <div className="relative overflow-hidden">
+                    <Image
+                      src={executive.image}
+                      alt={`${executive.name} - ${executive.role}`}
+                      width={300}
+                      height={400}
+                      className="w-full h-80 object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div className="absolute bottom-4 left-4 text-white">
+                      <h3 className="text-xl font-bold">{executive.name}</h3>
+                      <p className="text-gray-300 text-sm">{executive.role}</p>
+                    </div>
                   </div>
-                  <div className="w-20 h-20 mb-8 bg-gradient-to-br from-gray-800 to-black rounded-2xl flex items-center justify-center group-hover:from-white/20 group-hover:to-gray-900/50 transition-all duration-700 shadow-lg mx-auto">
-                    <service.icon className="w-10 h-10 text-gray-400 group-hover:text-white transition-colors duration-700" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-6 text-white group-hover:text-white transition-colors duration-500 text-center">
-                    {service.title}
-                  </h3>
-                  <p className="text-gray-400 group-hover:text-gray-300 mb-8 leading-relaxed transition-colors duration-500 text-center">
-                    {service.description}
-                  </p>
-                  <ul className="space-y-3 mb-8">
-                    {service.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-center text-sm text-gray-400">
-                        <CheckCircle className="w-4 h-4 text-white mr-3 flex-shrink-0" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="border-t border-gray-700 pt-6">
-                    <Link href="/contact">
-                      <Button className="w-full bg-white text-black hover:bg-gray-200 transition-all duration-300 hover:scale-105 py-3 font-semibold">
-                        Get Started
-                      </Button>
-                    </Link>
+                  <div className="p-8">
+                    <Badge className="bg-white/10 text-white mb-4">{executive.department}</Badge>
+                    <p className="text-gray-400 mb-6 leading-relaxed">{executive.bio}</p>
+                    <div className="space-y-2">
+                      <h4 className="text-white font-semibold mb-3">Specialties:</h4>
+                      {executive.specialties.map((specialty, idx) => (
+                        <div key={idx} className="flex items-center text-sm text-gray-400">
+                          <Award className="w-3 h-3 text-white mr-2" />
+                          {specialty}
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -340,12 +368,75 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* Portfolio Projects Section */}
       <section className="py-32 px-16 bg-black">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-20">
+            <Badge className="bg-white/20 text-white px-6 py-3 text-sm mb-8 rounded-full">Case Studies</Badge>
+            <h2 className="text-6xl font-black mb-10">OUR WORK</h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Transformative digital marketing campaigns that drive exceptional results for our clients.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {portfolioItems.map((item, index) => (
+              <Card
+                key={index}
+                className="bg-gray-900/60 border border-gray-700 hover:border-white/50 transition-all duration-700 group hover:scale-105 hover:shadow-2xl hover:shadow-white/20 backdrop-blur-lg overflow-hidden cursor-pointer"
+              >
+                <CardContent className="p-0">
+                  <div className="relative overflow-hidden">
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      width={600}
+                      height={400}
+                      className="w-full h-64 object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    <div className="absolute top-4 right-4">
+                      <ExternalLink className="w-5 h-5 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    </div>
+                  </div>
+                  <div className="p-8">
+                    <Badge className="bg-white/10 text-white mb-4">{item.category}</Badge>
+                    <h3 className="text-2xl font-bold mb-4 text-white">{item.title}</h3>
+                    <p className="text-gray-400 mb-6 leading-relaxed">{item.description}</p>
+                    <div className="space-y-3">
+                      <h4 className="text-white font-semibold mb-3">Key Results:</h4>
+                      {item.results.map((result, idx) => (
+                        <div key={idx} className="flex items-center text-sm text-gray-400">
+                          <Award className="w-3 h-3 text-white mr-2 flex-shrink-0" />
+                          {result}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <div className="text-center mt-20">
+            <Link href="/contact">
+              <Button
+                size="lg"
+                className="bg-white text-black hover:bg-gray-200 px-10 py-5 text-xl font-semibold hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-white/30"
+              >
+                Start Your Project <ArrowRight className="ml-3 w-5 h-5" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-32 px-16 bg-gray-900/30">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-6xl font-black mb-10">Ready to Get Started?</h2>
+          <h2 className="text-6xl font-black mb-10">Ready to Join Our Success Stories?</h2>
           <p className="text-2xl text-gray-400 mb-16">
-            Let's discuss which services are right for your business and create a custom strategy that delivers results.
+            Let's create extraordinary results for your business together.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link href="/contact">
@@ -356,15 +447,20 @@ export default function ServicesPage() {
                 Get Free Consultation <ArrowRight className="ml-3 w-5 h-5" />
               </Button>
             </Link>
-            <Link href="/portfolio">
+            <a
+              href="https://wa.me/919551077771?text=Hi%20Gumming4U!%20I%27d%20like%20to%20discuss%20my%20project%20requirements."
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Button
                 size="lg"
                 variant="outline"
                 className="border-3 border-white text-white hover:bg-white hover:text-black px-10 py-5 text-xl font-semibold bg-transparent hover:scale-105 transition-all duration-300"
               >
-                View Our Work
+                <Calendar className="mr-3 w-5 h-5" />
+                Schedule Meeting
               </Button>
-            </Link>
+            </a>
           </div>
         </div>
       </section>
