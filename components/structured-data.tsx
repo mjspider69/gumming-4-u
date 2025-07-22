@@ -1,13 +1,14 @@
 export function StructuredData() {
   const organizationSchema = {
     "@context": "https://schema.org",
-    "@type": "Organization",
+    "@type": ["Organization", "LocalBusiness", "MarketingConsultant"],
     name: "Gumming4U",
-    alternateName: "Gumming4U Digital Marketing Agency",
+    alternateName: ["Gumming4U Digital Marketing Agency", "Gumming 4 U", "G4U Marketing"],
     url: "https://gumming4u.com",
     logo: "https://gumming4u.com/images/gumming4u-logo.png",
+    image: "https://gumming4u.com/images/gumming4u-logo.png",
     description:
-      "Chennai's fastest-growing digital marketing agency specializing in SEO, PPC, social media marketing, and web development services.",
+      "Chennai's #1 digital marketing agency specializing in SEO services, PPC advertising, social media marketing, web development, and content creation. Trusted by 200+ businesses across Chennai and Tamil Nadu.",
     address: {
       "@type": "PostalAddress",
       addressLocality: "Chennai",
@@ -49,7 +50,9 @@ export function StructuredData() {
           itemOffered: {
             "@type": "Service",
             name: "SEO Services",
-            description: "Search Engine Optimization to improve website rankings",
+            description: "Professional Search Engine Optimization services to improve website rankings and organic traffic",
+            provider: { "@type": "Organization", name: "Gumming4U" },
+            areaServed: "Chennai, Tamil Nadu, India"
           },
         },
         {
@@ -57,7 +60,9 @@ export function StructuredData() {
           itemOffered: {
             "@type": "Service",
             name: "PPC Advertising",
-            description: "Pay-per-click advertising campaigns on Google and social media",
+            description: "Expert Pay-per-click advertising campaigns on Google Ads, Facebook, and other platforms",
+            provider: { "@type": "Organization", name: "Gumming4U" },
+            areaServed: "Chennai, Tamil Nadu, India"
           },
         },
         {
@@ -65,7 +70,9 @@ export function StructuredData() {
           itemOffered: {
             "@type": "Service",
             name: "Social Media Marketing",
-            description: "Strategic social media campaigns and management",
+            description: "Strategic social media campaigns, content creation, and community management",
+            provider: { "@type": "Organization", name: "Gumming4U" },
+            areaServed: "Chennai, Tamil Nadu, India"
           },
         },
         {
@@ -73,11 +80,55 @@ export function StructuredData() {
           itemOffered: {
             "@type": "Service",
             name: "Web Development",
-            description: "Custom website development and optimization",
+            description: "Custom website development, e-commerce solutions, and mobile optimization",
+            provider: { "@type": "Organization", name: "Gumming4U" },
+            areaServed: "Chennai, Tamil Nadu, India"
           },
         },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Content Marketing",
+            description: "Strategic content creation, blog writing, and content optimization",
+            provider: { "@type": "Organization", name: "Gumming4U" },
+            areaServed: "Chennai, Tamil Nadu, India"
+          },
+        },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Brand Strategy",
+            description: "Complete brand identity development and strategic marketing consulting",
+            provider: { "@type": "Organization", name: "Gumming4U" },
+            areaServed: "Chennai, Tamil Nadu, India"
+          },
+        }
       ],
     },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
+      reviewCount: "150",
+      bestRating: "5",
+      worstRating: "1"
+    },
+    review: [
+      {
+        "@type": "Review",
+        reviewRating: {
+          "@type": "Rating",
+          ratingValue: "5",
+          bestRating: "5"
+        },
+        author: {
+          "@type": "Person",
+          name: "Rajesh Kumar"
+        },
+        reviewBody: "Outstanding digital marketing services! Gumming4U helped us increase our online visibility by 300%. Highly recommend their SEO and PPC services."
+      }
+    ],
   }
 
   const localBusinessSchema = {

@@ -1,56 +1,89 @@
+
 import type { MetadataRoute } from "next"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://gumming4u.com"
+  const currentDate = new Date()
 
   return [
     {
       url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 1,
+      lastModified: currentDate,
+      changeFrequency: "daily",
+      priority: 1.0,
     },
     {
       url: `${baseUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/services`,
-      lastModified: new Date(),
+      lastModified: currentDate,
       changeFrequency: "monthly",
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/services`,
+      lastModified: currentDate,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
       url: `${baseUrl}/portfolio`,
-      lastModified: new Date(),
+      lastModified: currentDate,
       changeFrequency: "weekly",
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/blog`,
-      lastModified: new Date(),
-      changeFrequency: "daily",
+      url: `${baseUrl}/careers`,
+      lastModified: currentDate,
+      changeFrequency: "monthly",
       priority: 0.7,
     },
     {
       url: `${baseUrl}/contact`,
-      lastModified: new Date(),
+      lastModified: currentDate,
       changeFrequency: "monthly",
-      priority: 0.6,
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/inquiry`,
+      lastModified: currentDate,
+      changeFrequency: "weekly",
+      priority: 0.7,
     },
     {
       url: `${baseUrl}/privacy-policy`,
-      lastModified: new Date(),
+      lastModified: currentDate,
       changeFrequency: "yearly",
       priority: 0.3,
     },
     {
       url: `${baseUrl}/terms-conditions`,
-      lastModified: new Date(),
+      lastModified: currentDate,
       changeFrequency: "yearly",
       priority: 0.3,
     },
+    // Additional service-specific pages for SEO
+    {
+      url: `${baseUrl}/services/seo-services-chennai`,
+      lastModified: currentDate,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/services/ppc-advertising-chennai`,
+      lastModified: currentDate,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/services/social-media-marketing-chennai`,
+      lastModified: currentDate,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/services/web-development-chennai`,
+      lastModified: currentDate,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    }
   ]
 }

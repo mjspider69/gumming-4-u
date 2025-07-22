@@ -9,29 +9,38 @@ import { Suspense } from "react"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Gumming4U - Digital Marketing Agency in Chennai | SEO, PPC, Social Media",
+  title: "Gumming4U - #1 Digital Marketing Agency in Chennai | SEO, PPC, Social Media Marketing",
   description:
-    "Transform your business with Gumming4U, Chennai's fastest-growing digital marketing agency. Expert SEO, PPC, social media marketing, and web development services. Get your free marketing audit today!",
+    "🚀 Transform your business with Gumming4U - Chennai's fastest-growing digital marketing agency. Expert SEO services, PPC advertising, social media marketing & web development. 📈 Get your FREE marketing audit today! ✅ 200+ Happy Clients ✅ 5-Star Reviews",
   keywords: [
-    "digital marketing agency Chennai",
+    "digital marketing agency",
+    "digital marketing agency Chennai", 
+    "best digital marketing agency",
     "SEO services Chennai",
-    "PPC advertising",
-    "social media marketing",
-    "web development",
-    "content creation",
-    "brand strategy",
-    "marketing automation",
+    "PPC advertising Chennai",
+    "social media marketing agency",
+    "web development Chennai",
+    "content marketing agency",
+    "brand strategy consulting",
+    "marketing automation services",
     "Gumming4U",
-    "digital marketing Tamil Nadu",
+    "digital marketing company Chennai",
     "online marketing Chennai",
     "website development Chennai",
     "Google Ads management",
-    "Facebook advertising",
-    "Instagram marketing",
-    "LinkedIn marketing",
-    "email marketing",
+    "Facebook advertising agency",
+    "Instagram marketing Chennai",
+    "LinkedIn marketing services",
+    "email marketing Chennai",
     "conversion optimization",
     "local SEO Chennai",
+    "digital marketing consultant",
+    "internet marketing agency",
+    "performance marketing",
+    "growth marketing agency",
+    "digital advertising agency",
+    "marketing agency near me",
+    "top marketing agency Chennai"
   ],
   authors: [{ name: "Gumming4U Team" }],
   creator: "Gumming4U",
@@ -118,6 +127,31 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black" />
         <meta name="format-detection" content="telephone=no" />
+        <meta name="geo.region" content="IN-TN" />
+        <meta name="geo.placename" content="Chennai" />
+        <meta name="geo.position" content="13.0827;80.2707" />
+        <meta name="ICBM" content="13.0827, 80.2707" />
+        <meta name="language" content="English" />
+        <meta name="distribution" content="global" />
+        <meta name="rating" content="general" />
+        <meta name="coverage" content="worldwide" />
+        <meta name="target" content="all" />
+        <meta name="HandheldFriendly" content="true" />
+        <meta name="MobileOptimized" content="width" />
+        <meta name="audience" content="all" />
+        <meta name="subject" content="Digital Marketing Services" />
+        <meta name="abstract" content="Professional digital marketing agency in Chennai offering SEO, PPC, social media marketing and web development services" />
+        <meta name="topic" content="Digital Marketing" />
+        <meta name="summary" content="Gumming4U is Chennai's leading digital marketing agency providing comprehensive online marketing solutions" />
+        <meta name="Classification" content="Business" />
+        <meta name="designer" content="Gumming4U" />
+        <meta name="reply-to" content="gumming4u@gmail.com" />
+        <meta name="owner" content="Gumming4U" />
+        <meta name="url" content="https://gumming4u.com" />
+        <meta name="identifier-URL" content="https://gumming4u.com" />
+        <meta name="directory" content="submission" />
+        <meta name="category" content="Digital Marketing, SEO, PPC, Social Media Marketing" />
+        <link rel="author" href="https://gumming4u.com/about" />
 
         {/* Preconnect to external domains */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />

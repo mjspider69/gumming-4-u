@@ -1,0 +1,24 @@
+
+# robots.txt for Gumming4U Digital Marketing Agency
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /private/
+
+# Sitemap location
+Sitemap: https://gumming4u.com/sitemap.xml
+
+# Crawl delay
+Crawl-delay: 1
+
+# Allow specific search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /

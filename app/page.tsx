@@ -1,4 +1,4 @@
-
+javascript
 "use client"
 
 import { Canvas } from "@react-three/fiber"
@@ -465,19 +465,12 @@ export default function Component() {
         <div className="relative z-10 flex items-center justify-center min-h-screen px-16">
           <div className="max-w-7xl mx-auto text-center">
             {/* Main Heading with Team Image Reveal */}
-            <div className="relative mb-12 min-h-[600px] flex items-center justify-center">
-              {/* Background Image Area - Invisible but hover-sensitive */}
-              <div
-                className="absolute inset-0 w-full h-full cursor-pointer"
+            <div className="relative mb-12">
+              <h1 
+                className="text-8xl font-black leading-tight mb-8 transition-all duration-700 ease-out"
+                style={{ opacity: showTeamImage ? 0.2 : 1 }}
                 onMouseEnter={() => setShowTeamImage(true)}
                 onMouseLeave={() => setShowTeamImage(false)}
-                style={{ zIndex: 1 }}
-              />
-
-              {/* Main Heading */}
-              <h1 
-                className="text-8xl font-black leading-tight mb-8 transition-all duration-700 ease-out relative z-10 pointer-events-none"
-                style={{ opacity: showTeamImage ? 0.15 : 1 }}
                 data-cursor="text"
               >
                 LOOKING FOR
@@ -490,29 +483,21 @@ export default function Component() {
                 IN THE <span className="text-gray-400">ORDINARY</span>
               </h1>
 
-              {/* Team Image Reveal - Positioned behind text */}
+              {/* Team Image Reveal */}
               <div
-                className={`absolute inset-0 flex items-center justify-center transition-all duration-700 ease-out pointer-events-none ${
-                  showTeamImage ? "opacity-90 scale-100" : "opacity-0 scale-95"
+                className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-all duration-700 ease-out ${
+                  showTeamImage ? "opacity-100 scale-100" : "opacity-0 scale-95"
                 }`}
-                style={{ zIndex: 2 }}
               >
-                <div className="relative w-full h-full max-w-4xl max-h-96">
+                <div className="relative">
                   <Image
-                    src="/images/team-photo.jpg"
+                    src="/placeholder.svg?height=400&width=600&text=G4U+Team+Photo"
                     alt="Gumming4U Team - The Creative Minds Behind Extraordinary Marketing"
-                    fill
-                    className="object-cover rounded-2xl shadow-2xl filter grayscale hover:grayscale-0 transition-all duration-700 border-4 border-white/30"
-                    style={{ 
-                      mixBlendMode: 'overlay',
-                      filter: 'grayscale(100%) contrast(1.1) brightness(0.7)'
-                    }}
+                    width={600}
+                    height={400}
+                    className="rounded-2xl shadow-2xl filter grayscale border-4 border-white/20"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent rounded-2xl"></div>
-                  <div className="absolute bottom-6 left-6 text-white z-10">
-                    <h3 className="text-2xl font-bold opacity-80">The G4U Creative Team</h3>
-                    <p className="text-gray-300 opacity-70">Where extraordinary ideas come to life</p>
-                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-2xl"></div>
                 </div>
               </div>
             </div>
