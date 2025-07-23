@@ -15,7 +15,7 @@ import { Navigation } from "@/components/navigation"
 import { EditableText } from "@/components/editable-text"
 import { EditableImage } from "@/components/editable-image"
 
-const HomePage: React.FC = () => {
+export default function HomePage(): React.JSX.Element {
   return (
     <div className="min-h-screen bg-black text-white overflow-hidden relative" style={{ cursor: "none" }}>
       <Enhanced3DBackground />
@@ -128,43 +128,37 @@ const HomePage: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {[
             {
-              id: "digital-marketing",
               title: "Digital Marketing",
               description: "Comprehensive digital marketing strategies that drive growth and engagement across all channels.",
               icon: "📱"
             },
             {
-              id: "brand-design",
               title: "Brand Design",
               description: "Creative brand identity design that captures your essence and resonates with your audience.",
               icon: "🎨"
             },
             {
-              id: "web-development",
               title: "Web Development",
               description: "Modern, responsive websites that deliver exceptional user experiences and convert visitors.",
               icon: "💻"
             },
             {
-              id: "social-media",
               title: "Social Media",
               description: "Strategic social media management that builds communities and drives meaningful engagement.",
               icon: "📲"
             },
             {
-              id: "seo-optimization",
               title: "SEO Optimization",
               description: "Advanced SEO strategies that improve your search rankings and organic visibility.",
               icon: "🔍"
             },
             {
-              id: "analytics-insights",
               title: "Analytics & Insights",
               description: "Data-driven insights and analytics that inform strategy and measure success.",
               icon: "📊"
             }
-          ].map((service) => (
-            <Card key={service.id} className="bg-white/10 border-white/20 backdrop-blur-sm hover:bg-white/20 transition-all group">
+          ].map((service, index) => (
+            <Card key={`service-${service.title}-${index}`} className="bg-white/10 border-white/20 backdrop-blur-sm hover:bg-white/20 transition-all group">
               <CardContent className="p-8">
                 <div className="text-4xl mb-4">{service.icon}</div>
                 <h3 className="text-xl font-bold text-white mb-4">{service.title}</h3>
@@ -208,7 +202,8 @@ const HomePage: React.FC = () => {
                 width={120}
                 height={40}
                 className="mb-4"
-                style={{ width: 'auto', height: 'auto' }}
+                style={{ width: 'auto', height: '40px' }}
+                priority
               />
               <p className="text-gray-400">
                 <EditableText 
@@ -253,5 +248,3 @@ const HomePage: React.FC = () => {
     </div>
   )
 }
-
-export default HomePage
