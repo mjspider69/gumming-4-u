@@ -1,192 +1,167 @@
-export function StructuredData() {
-  const organizationSchema = {
-    "@context": "https://schema.org",
-    "@type": ["Organization", "LocalBusiness", "MarketingConsultant"],
-    name: "Gumming4U",
-    alternateName: ["Gumming4U Digital Marketing Agency", "Gumming 4 U", "G4U Marketing"],
-    url: "https://gumming4u.com",
-    logo: "https://gumming4u.com/images/gumming4u-logo.png",
-    image: "https://gumming4u.com/images/gumming4u-logo.png",
-    description:
-      "Chennai's #1 digital marketing agency specializing in SEO services, PPC advertising, social media marketing, web development, and content creation. Trusted by 200+ businesses across Chennai and Tamil Nadu.",
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Chennai",
-      addressRegion: "Tamil Nadu",
-      addressCountry: "IN",
-    },
-    contactPoint: {
-      "@type": "ContactPoint",
-      telephone: "+91-95510-77771",
-      contactType: "customer service",
-      email: "gumming4u@gmail.com",
-      availableLanguage: ["English", "Tamil"],
-    },
-    founder: {
-      "@type": "Person",
-      name: "Aryaan Alam",
-    },
-    foundingDate: "2023",
-    sameAs: [
-      "https://www.linkedin.com/company/gumming4u",
-      "https://www.instagram.com/gumming4u",
-      "https://twitter.com/gumming4u",
-    ],
-    serviceArea: {
-      "@type": "GeoCircle",
-      geoMidpoint: {
-        "@type": "GeoCoordinates",
-        latitude: "13.0827",
-        longitude: "80.2707",
-      },
-      geoRadius: "50000",
-    },
-    hasOfferCatalog: {
-      "@type": "OfferCatalog",
-      name: "Digital Marketing Services",
-      itemListElement: [
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "SEO Services",
-            description: "Professional Search Engine Optimization services to improve website rankings and organic traffic",
-            provider: { "@type": "Organization", name: "Gumming4U" },
-            areaServed: "Chennai, Tamil Nadu, India"
+import Script from "next/script"
+
+interface StructuredDataProps {
+  type?: "Organization" | "WebSite" | "LocalBusiness" | "Article" | "Service"
+  data?: any
+}
+
+export function StructuredData({ type = "Organization", data = {} }: StructuredDataProps) {
+  const getStructuredData = () => {
+    const baseData = {
+      "@context": "https://schema.org",
+      "@type": type,
+    }
+
+    switch (type) {
+      case "Organization":
+        return {
+          ...baseData,
+          name: "Gumming4U",
+          alternateName: "Gumming4U Digital Marketing Agency",
+          description: "Leading digital marketing agency in Chennai specializing in SEO, PPC, social media marketing, and web development",
+          url: "https://gumming4u.com",
+          logo: "https://gumming4u.com/images/gumming4u-logo.png",
+          contactPoint: {
+            "@type": "ContactPoint",
+            telephone: "+91-95510-77771",
+            contactType: "customer service",
+            email: "gumming4u@gmail.com",
+            availableLanguage: ["English", "Tamil", "Hindi"]
           },
-        },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "PPC Advertising",
-            description: "Expert Pay-per-click advertising campaigns on Google Ads, Facebook, and other platforms",
-            provider: { "@type": "Organization", name: "Gumming4U" },
-            areaServed: "Chennai, Tamil Nadu, India"
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Chennai",
+            addressRegion: "Tamil Nadu",
+            addressCountry: "IN"
           },
-        },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Social Media Marketing",
-            description: "Strategic social media campaigns, content creation, and community management",
-            provider: { "@type": "Organization", name: "Gumming4U" },
-            areaServed: "Chennai, Tamil Nadu, India"
+          sameAs: [
+            "https://instagram.com/gumming4u",
+            "https://linkedin.com/company/gumming4u",
+            "https://twitter.com/gumming4u"
+          ],
+          foundingDate: "2023",
+          founder: {
+            "@type": "Person",
+            name: "Aryaan Alam"
           },
-        },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Web Development",
-            description: "Custom website development, e-commerce solutions, and mobile optimization",
-            provider: { "@type": "Organization", name: "Gumming4U" },
-            areaServed: "Chennai, Tamil Nadu, India"
-          },
-        },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Content Marketing",
-            description: "Strategic content creation, blog writing, and content optimization",
-            provider: { "@type": "Organization", name: "Gumming4U" },
-            areaServed: "Chennai, Tamil Nadu, India"
-          },
-        },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Brand Strategy",
-            description: "Complete brand identity development and strategic marketing consulting",
-            provider: { "@type": "Organization", name: "Gumming4U" },
-            areaServed: "Chennai, Tamil Nadu, India"
-          },
+          numberOfEmployees: "10-20",
+          ...data
         }
-      ],
-    },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "4.9",
-      reviewCount: "150",
-      bestRating: "5",
-      worstRating: "1"
-    },
-    review: [
-      {
-        "@type": "Review",
-        reviewRating: {
-          "@type": "Rating",
-          ratingValue: "5",
-          bestRating: "5"
-        },
-        author: {
-          "@type": "Person",
-          name: "Rajesh Kumar"
-        },
-        reviewBody: "Outstanding digital marketing services! Gumming4U helped us increase our online visibility by 300%. Highly recommend their SEO and PPC services."
-      }
-    ],
-  }
 
-  const localBusinessSchema = {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    name: "Gumming4U",
-    image: "https://gumming4u.com/images/gumming4u-logo.png",
-    telephone: "+91-95510-77771",
-    email: "gumming4u@gmail.com",
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Chennai",
-      addressRegion: "Tamil Nadu",
-      addressCountry: "IN",
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: "13.0827",
-      longitude: "80.2707",
-    },
-    url: "https://gumming4u.com",
-    openingHours: "Mo-Fr 09:00-18:00",
-    priceRange: "$$",
-  }
+      case "LocalBusiness":
+        return {
+          ...baseData,
+          "@type": "ProfessionalService",
+          name: "Gumming4U",
+          description: "Digital marketing agency in Chennai offering SEO, PPC, social media marketing, and web development services",
+          url: "https://gumming4u.com",
+          telephone: "+91-95510-77771",
+          email: "gumming4u@gmail.com",
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Chennai",
+            addressRegion: "Tamil Nadu",
+            addressCountry: "IN"
+          },
+          geo: {
+            "@type": "GeoCoordinates",
+            latitude: "13.0827",
+            longitude: "80.2707"
+          },
+          openingHours: [
+            "Mo-Fr 09:00-18:00",
+            "Sa 10:00-14:00"
+          ],
+          priceRange: "$$",
+          areaServed: {
+            "@type": "State",
+            name: "Tamil Nadu"
+          },
+          serviceArea: {
+            "@type": "GeoCircle",
+            geoMidpoint: {
+              "@type": "GeoCoordinates",
+              latitude: "13.0827",
+              longitude: "80.2707"
+            },
+            geoRadius: "50"
+          },
+          ...data
+        }
 
-  const websiteSchema = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: "Gumming4U",
-    url: "https://gumming4u.com",
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: "https://gumming4u.com/search?q={search_term_string}",
-      },
-      "query-input": "required name=search_term_string",
-    },
+      case "WebSite":
+        return {
+          ...baseData,
+          name: "Gumming4U",
+          url: "https://gumming4u.com",
+          description: "Digital marketing agency specializing in SEO, PPC, social media marketing, and web development",
+          publisher: {
+            "@type": "Organization",
+            name: "Gumming4U"
+          },
+          potentialAction: {
+            "@type": "SearchAction",
+            target: "https://gumming4u.com/search?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          },
+          ...data
+        }
+
+      case "Service":
+        return {
+          ...baseData,
+          name: data.name || "Digital Marketing Services",
+          description: data.description || "Comprehensive digital marketing solutions",
+          provider: {
+            "@type": "Organization",
+            name: "Gumming4U",
+            url: "https://gumming4u.com"
+          },
+          areaServed: {
+            "@type": "Country",
+            name: "India"
+          },
+          serviceType: data.serviceType || "Digital Marketing",
+          ...data
+        }
+
+      default:
+        return { ...baseData, ...data }
+    }
   }
 
   return (
+    <Script
+      id={`structured-data-${type.toLowerCase()}`}
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify(getStructuredData()),
+      }}
+    />
+  )
+}
+
+// Multiple structured data types for the homepage
+export function HomePageStructuredData() {
+  return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(organizationSchema),
+      <StructuredData type="Organization" />
+      <StructuredData type="LocalBusiness" />
+      <StructuredData type="WebSite" />
+      <StructuredData 
+        type="Service" 
+        data={{
+          name: "SEO Services Chennai",
+          description: "Professional search engine optimization services to improve your website's visibility and ranking",
+          serviceType: "Search Engine Optimization"
         }}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(localBusinessSchema),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(websiteSchema),
+      <StructuredData 
+        type="Service" 
+        data={{
+          name: "PPC Advertising Chennai",
+          description: "Pay-per-click advertising management for Google Ads, Facebook Ads, and other platforms",
+          serviceType: "Pay Per Click Advertising"
         }}
       />
     </>

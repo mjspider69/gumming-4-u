@@ -2,6 +2,85 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Fix gap issues and ensure consistent spacing */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure consistent section spacing */
+.section-spacing {
+  @apply py-16 md:py-24 lg:py-32;
+}
+
+/* Remove unwanted gaps */
+.no-gap {
+  @apply m-0 p-0;
+}
+
+/* Responsive padding */
+.responsive-padding {
+  @apply px-4 sm:px-6 md:px-8 lg:px-16;
+}
+
+/* Fix image aspect ratio issues */
+.aspect-ratio-fix {
+  @apply w-full h-auto;
+}
+
+/* Ensure proper line height for better readability */
+.improved-readability {
+  @apply leading-relaxed tracking-wide;
+}
+
+/* Fix mobile navigation issues */
+.mobile-nav-fix {
+  @apply overflow-hidden;
+}
+
+/* Smooth transitions */
+.smooth-transition {
+  @apply transition-all duration-300 ease-in-out;
+}
+
+/* Fix potential layout shifts */
+.layout-stable {
+  @apply will-change-auto;
+}
+
+/* Ensure proper z-index stacking */
+.z-index-fix {
+  @apply relative;
+}
+
+/* Fix scrollbar styling for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #666;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}
+
+/* Fix focus states for accessibility */
+.focus-visible {
+  @apply focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

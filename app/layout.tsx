@@ -1,15 +1,20 @@
 import type React from "react"
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import { StructuredData } from "@/components/structured-data"
 import { Analytics } from "@/components/analytics"
 import { Suspense } from "react"
-import { Enhanced3DBackground } from '@/components/enhanced-3d-background'
-// Assuming ContentEditor is in '@/components/content-editor', you might need to adjust the path
-import { ContentEditor } from '@/components/content-editor'
 
 const inter = Inter({ subsets: ["latin"] })
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: '#000000',
+}
 
 export const metadata: Metadata = {
   title: "Gumming4U - #1 Digital Marketing Agency in Chennai | SEO, PPC, Social Media Marketing",
