@@ -1,8 +1,6 @@
 "use client"
 
-import { Canvas } from "@react-three/fiber"
 import { Suspense, useEffect, useState } from "react"
-import { Environment, Float, Text3D, OrbitControls, Sphere, Box, Torus, Stars } from "@react-three/drei"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import {
@@ -42,193 +40,6 @@ import {
   StaggerText 
 } from "@/components/text-animations"
 import { AdvancedCursor } from "@/components/advanced-cursor"
-import { ParticleSystem } from "@/components/particle-effects"
-
-// Enhanced Custom cursor with black/white theme
-function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const [isHovering, setIsHovering] = useState(false)
-  const [isClicking, setIsClicking] = useState(false)
-  const [cursorVariant, setCursorVariant] = useState("default")
-
-  useEffect(() => {
-    const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY })
-    }
-
-    const handleMouseDown = () => setIsClicking(true)
-    const handleMouseUp = () => setIsClicking(false)
-
-    const handleMouseEnter = (e: Event) => {
-      const target = e.target as HTMLElement
-      setIsHovering(true)
-
-      if (target.tagName === "BUTTON" || target.closest("button")) {
-        setCursorVariant("button")
-      } else if (target.tagName === "A" || target.closest("a")) {
-        setCursorVariant("link")
-      } else if (
-        target.closest('[data-cursor="text"]') ||
-        target.tagName === "INPUT" ||
-        target.tagName === "TEXTAREA"
-      ) {
-        setCursorVariant("text")
-      } else {
-        setCursorVariant("hover")
-      }
-    }
-
-    const handleMouseLeave = () => {
-      setIsHovering(false)
-      setCursorVariant("default")
-    }
-
-    document.addEventListener("mousemove", updateMousePosition)
-    document.addEventListener("mousedown", handleMouseDown)
-    document.addEventListener("mouseup", handleMouseUp)
-
-    const interactiveElements = document.querySelectorAll('button, a, [role="button"], input, textarea, [data-cursor]')
-    interactiveElements.forEach((el) => {
-      el.addEventListener("mouseenter", handleMouseEnter)
-      el.addEventListener("mouseleave", handleMouseLeave)
-    })
-
-    return () => {
-      document.removeEventListener("mousemove", updateMousePosition)
-      document.removeEventListener("mousedown", handleMouseDown)
-      document.removeEventListener("mouseup", handleMouseUp)
-      interactiveElements.forEach((el) => {
-        el.removeEventListener("mouseenter", handleMouseEnter)
-        el.removeEventListener("mouseleave", handleMouseLeave)
-      })
-    }
-  }, [])
-
-  const getCursorSize = () => {
-    switch (cursorVariant) {
-      case "button":
-        return isClicking ? 50 : 45
-      case "link":
-        return 38
-      case "text":
-        return 28
-      case "hover":
-        return 35
-      default:
-        return isClicking ? 22 : 18
-    }
-  }
-
-  const getCursorStyles = () => {
-    switch (cursorVariant) {
-      case "button":
-        return {
-          background: "rgba(255, 255, 255, 0.95)",
-          border: "2px solid #000000",
-          boxShadow: "0 0 30px rgba(255, 255, 255, 0.8), inset 0 0 15px rgba(0, 0, 0, 0.3)",
-        }
-      case "link":
-        return {
-          background: "rgba(0, 0, 0, 0.9)",
-          border: "2px solid #ffffff",
-          boxShadow: "0 0 25px rgba(0, 0, 0, 0.7), inset 0 0 10px rgba(255, 255, 255, 0.2)",
-        }
-      case "text":
-        return {
-          background: "rgba(255, 255, 255, 0.85)",
-          border: "1px solid #000000",
-          boxShadow: "0 0 20px rgba(255, 255, 255, 0.6)",
-        }
-      case "hover":
-        return {
-          background: "rgba(128, 128, 128, 0.8)",
-          border: "2px solid #ffffff",
-          boxShadow: "0 0 22px rgba(128, 128, 128, 0.5)",
-        }
-      default:
-        return {
-          background: "rgba(255, 255, 255, 0.95)",
-          border: "1px solid rgba(0, 0, 0, 0.4)",
-          boxShadow: "0 0 18px rgba(255, 255, 255, 0.5), 0 0 35px rgba(255, 255, 255, 0.3)",
-        }
-    }
-  }
-
-  const size = getCursorSize()
-  const styles = getCursorStyles()
-
-  return (
-    <>
-      <div
-        className="fixed top-0 left-0 rounded-full pointer-events-none z-[9999] transition-all duration-200 ease-out"
-        style={{
-          width: `${size}px`,
-          height: `${size}px`,
-          transform: `translate(${mousePosition.x - size / 2}px, ${mousePosition.y - size / 2}px) scale(${isClicking ? 0.85 : 1})`,
-          ...styles,
-          backdropFilter: "blur(2px)",
-        }}
-      />
-
-      <div
-        className="fixed top-0 left-0 w-1 h-1 bg-black rounded-full pointer-events-none z-[9999] transition-all duration-100 ease-out"
-        style={{
-          transform: `translate(${mousePosition.x - 2}px, ${mousePosition.y - 2}px) scale(${isHovering ? 0 : 1})`,
-          opacity: cursorVariant === "default" ? 0.9 : 0,
-        }}
-      />
-
-      <div
-        className="fixed top-0 left-0 rounded-full pointer-events-none z-[9998] transition-all duration-300 ease-out"
-        style={{
-          width: `${size + 12}px`,
-          height: `${size + 12}px`,
-          transform: `translate(${mousePosition.x - (size + 12) / 2}px, ${mousePosition.y - (size + 12) / 2}px)`,
-          border: "1px solid rgba(0, 0, 0, 0.2)",
-          opacity: isHovering ? 0.7 : 0,
-        }}
-      />
-    </>
-  )
-}
-
-// Enhanced 3D Scene Components with black/white theme
-function FloatingElements() {
-  return (
-    <>
-      <Stars radius={100} depth={50} count={5000} factor={6} saturation={0} fade speed={0.7} />
-
-      <Float speed={2} rotationIntensity={1.5} floatIntensity={3}>
-        <Sphere args={[0.5, 32, 32]} position={[-4, 3, -3]}>
-          <meshStandardMaterial color="#ffffff" emissive="#ffffff" emissiveIntensity={0.15} roughness={0.1} metalness={0.8} />
-        </Sphere>
-      </Float>
-
-      <Float speed={2.5} rotationIntensity={2.5} floatIntensity={2}>
-        <Box args={[0.8, 0.8, 0.8]} position={[4, -2, -2]}>
-          <meshStandardMaterial color="#000000" roughness={0.3} metalness={0.9} />
-        </Box>
-      </Float>
-
-      <Float speed={2.2} rotationIntensity={2} floatIntensity={2.5}>
-        <Torus args={[0.6, 0.25, 16, 32]} position={[3, 4, -4]}>
-          <meshStandardMaterial color="#888888" roughness={0.2} metalness={0.7} />
-        </Torus>
-      </Float>
-    </>
-  )
-}
-
-function Hero3D() {
-  return (
-    <Float speed={1.5} rotationIntensity={0.8} floatIntensity={1}>
-      <Text3D font="/fonts/Geist_Bold.json" size={0.8} height={0.15} position={[-2, 0, 0]}>
-        G4U
-        <meshStandardMaterial color="#ffffff" roughness={0.1} metalness={0.8} />
-      </Text3D>
-    </Float>
-  )
-}
 
 // Enhanced Navigation Component
 function Navigation() {
@@ -236,7 +47,7 @@ function Navigation() {
   const [isWorkDropdownOpen, setIsWorkDropdownOpen] = useState(false)
 
   return (
-    <nav className="bg-black/98 backdrop-blur-xl border-b border-gray-800/70 sticky top-0 z-50">
+    <nav className="bg-black/95 backdrop-blur-xl border-b border-gray-800/70 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center group">
@@ -379,6 +190,20 @@ function Navigation() {
 
 export default function Component() {
   const [showTeamImage, setShowTeamImage] = useState(false)
+  const [scrollProgress, setScrollProgress] = useState(0)
+
+  // Enhanced scroll progress tracking
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight
+      const progress = scrollTop / docHeight
+      setScrollProgress(progress)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const services = [
     {
@@ -455,23 +280,25 @@ export default function Component() {
   return (
     <div className="min-h-screen bg-black text-white overflow-hidden" style={{ cursor: "none" }}>
       <AdvancedCursor />
-      <ParticleSystem />
+
+      {/* Global Enhanced 3D Background with scroll-based G4U formation */}
+      <Enhanced3DBackground variant="complex" showText={true} text="G4U" scrollProgress={scrollProgress} />
+
       <Navigation />
       <Chatbot />
 
-      {/* Full-Width Hero Section */}
-      <section className="min-h-screen bg-black relative overflow-hidden">
-        {/* Enhanced 3D Background */}
-        <Enhanced3DBackground variant="complex" showText={true} text="G4U" />
-
-        {/* Content Container */}
+      {/* Hero Section with Enhanced Animations */}
+      <section className="min-h-screen relative overflow-hidden">
         <div className="relative z-10 flex items-center justify-center min-h-screen px-16">
           <div className="max-w-7xl mx-auto text-center">
             {/* Main Heading with Team Image Reveal */}
             <div className="relative mb-12">
               <div 
                 className="text-8xl font-black leading-tight mb-8 transition-all duration-700 ease-out"
-                style={{ opacity: showTeamImage ? 0.2 : 1 }}
+                style={{ 
+                  opacity: showTeamImage ? 0.2 : 1,
+                  transform: `translateY(${scrollProgress * 50}px) scale(${1 - scrollProgress * 0.1})`
+                }}
                 onMouseEnter={() => setShowTeamImage(true)}
                 onMouseLeave={() => setShowTeamImage(false)}
                 data-cursor="text"
@@ -498,7 +325,7 @@ export default function Component() {
               >
                 <div className="relative">
                   <Image
-                    src="/placeholder.svg?height=400&width=600&text=G4U+Team+Photo"
+                    src="/images/team-photo.jpg"
                     alt="Gumming4U Team - The Creative Minds Behind Extraordinary Marketing"
                     width={600}
                     height={400}
@@ -509,62 +336,67 @@ export default function Component() {
               </div>
             </div>
 
-            <TypingAnimation 
-              text="We don't market. We make movements." 
-              className="text-3xl mb-10 font-light block"
-              speed={80}
-            />
+            <div style={{ transform: `translateY(${scrollProgress * 30}px) rotateX(${scrollProgress * 5}deg)` }}>
+              <TypingAnimation 
+                text="We don't market. We make movements." 
+                className="text-3xl mb-10 font-light block"
+                speed={80}
+              />
 
-            <WordReveal 
-              text="Transform your business with data-driven digital marketing strategies that deliver measurable results. From SEO to social media, we're your growth partners in the digital revolution."
-              className="text-xl mb-16 text-gray-300 leading-relaxed max-w-4xl mx-auto"
-              delay={0.08}
-            />
+              <WordReveal 
+                text="Transform your business with data-driven digital marketing strategies that deliver measurable results. From SEO to social media, we're your growth partners in the digital revolution."
+                className="text-xl mb-16 text-gray-300 leading-relaxed max-w-4xl mx-auto"
+                delay={0.08}
+              />
 
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Link href="/contact">
-                <Button
-                  size="lg"
-                  className="bg-white text-black hover:bg-gray-200 px-10 py-5 text-xl font-semibold hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-white/30 relative overflow-hidden group"
-                  onClick={() => trackServiceInquiry("free_audit")}
-                  data-magnetic
-                >
-                  <span className="relative z-10">Get Free Marketing Audit <ArrowRight className="ml-3 w-5 h-5 inline-block" /></span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                </Button>
-              </Link>
-              <Link href="/portfolio">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-3 border-white text-white hover:bg-white hover:text-black px-10 py-5 text-xl font-semibold bg-transparent hover:scale-105 transition-all duration-300 relative overflow-hidden group"
-                  data-magnetic
-                >
-                  <span className="relative z-10">View Our Work</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                </Button>
-              </Link>
+              <div className="flex flex-col sm:flex-row gap-6 justify-center">
+                <Link href="/contact">
+                  <Button
+                    size="lg"
+                    className="bg-white text-black hover:bg-gray-200 px-10 py-5 text-xl font-semibold hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-white/30 relative overflow-hidden group"
+                    onClick={() => trackServiceInquiry("free_audit")}
+                    data-magnetic
+                  >
+                    <span className="relative z-10">Get Free Marketing Audit <ArrowRight className="ml-3 w-5 h-5 inline-block" /></span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                  </Button>
+                </Link>
+                <Link href="/portfolio">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="border-3 border-white text-white hover:bg-white hover:text-black px-10 py-5 text-xl font-semibold bg-transparent hover:scale-105 transition-all duration-300 relative overflow-hidden group"
+                    data-magnetic
+                  >
+                    <span className="relative z-10">View Our Work</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Enhanced Stats Section */}
-      <section className="py-24 px-16 bg-gray-900/50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div className="bg-black/80 p-8 rounded-2xl shadow-2xl hover:shadow-white/10 transition-all duration-500 border border-gray-800 hover:scale-105 hover:border-white/30 backdrop-blur-lg">
+      {/* Enhanced Stats Section with Scroll Animations */}
+      <section className="py-24 px-16 relative">
+        <div 
+          className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+          style={{ transform: `translateY(${(scrollProgress - 0.2) * 100}px) scale(${1 + (scrollProgress - 0.2) * 0.1})` }}
+        >
+          <div className="bg-black/90 p-8 rounded-2xl shadow-2xl hover:shadow-white/10 transition-all duration-500 border border-gray-800 hover:scale-105 hover:border-white/30 backdrop-blur-lg">
             <div className="text-5xl font-black text-white mb-3">50+</div>
             <p className="text-gray-400">Happy Clients</p>
           </div>
-          <div className="bg-black/80 p-8 rounded-2xl shadow-2xl hover:shadow-white/10 transition-all duration-500 border border-gray-800 hover:scale-105 hover:border-white/30 backdrop-blur-lg">
+          <div className="bg-black/90 p-8 rounded-2xl shadow-2xl hover:shadow-white/10 transition-all duration-500 border border-gray-800 hover:scale-105 hover:border-white/30 backdrop-blur-lg">
             <div className="text-5xl font-black text-white mb-3">200+</div>
             <p className="text-gray-400">Projects Completed</p>
           </div>
-          <div className="bg-black/80 p-8 rounded-2xl shadow-2xl hover:shadow-white/10 transition-all duration-500 border border-gray-800 hover:scale-105 hover:border-white/30 backdrop-blur-lg">
+          <div className="bg-black/90 p-8 rounded-2xl shadow-2xl hover:shadow-white/10 transition-all duration-500 border border-gray-800 hover:scale-105 hover:border-white/30 backdrop-blur-lg">
             <div className="text-5xl font-black text-white mb-3">300%</div>
             <p className="text-gray-400">Average ROI Increase</p>
           </div>
-          <div className="bg-black/80 p-8 rounded-2xl shadow-2xl hover:shadow-white/10 transition-all duration-500 border border-gray-800 hover:scale-105 hover:border-white/30 backdrop-blur-lg">
+          <div className="bg-black/90 p-8 rounded-2xl shadow-2xl hover:shadow-white/10 transition-all duration-500 border border-gray-800 hover:scale-105 hover:border-white/30 backdrop-blur-lg">
             <div className="text-5xl font-black text-white mb-3">24/7</div>
             <p className="text-gray-400">Support Available</p>
           </div>
@@ -572,9 +404,12 @@ export default function Component() {
       </section>
 
       {/* Enhanced Services Preview Section */}
-      <section className="py-32 px-16 bg-black relative">
+      <section className="py-32 px-16 relative">
         <div className="relative z-10 max-w-7xl mx-auto">
-          <div className="text-center mb-20">
+          <div 
+            className="text-center mb-20"
+            style={{ transform: `translateY(${(scrollProgress - 0.3) * 80}px) rotateY(${(scrollProgress - 0.3) * 10}deg)` }}
+          >
             <Badge className="bg-white/20 text-white px-6 py-3 text-sm mb-8 rounded-full">What We Do</Badge>
             <CharacterReveal 
               text="OUR SERVICES" 
@@ -587,10 +422,19 @@ export default function Component() {
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div 
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            style={{ transform: `translateY(${(scrollProgress - 0.4) * 60}px) scale(${1 + (scrollProgress - 0.4) * 0.05})` }}
+          >
             {services.map((service, index) => (
               <Link key={index} href="/services">
-                <div className="bg-gray-900/60 border border-gray-700/50 hover:border-white/50 backdrop-blur-lg transition-all duration-700 group cursor-pointer hover:scale-105 hover:shadow-2xl hover:shadow-white/20 p-10 text-center relative overflow-hidden rounded-2xl">
+                <div 
+                  className="bg-black/80 border border-gray-700/50 hover:border-white/50 backdrop-blur-lg transition-all duration-700 group cursor-pointer hover:scale-105 hover:shadow-2xl hover:shadow-white/20 p-10 text-center relative overflow-hidden rounded-2xl"
+                  style={{ 
+                    transform: `translateY(${(scrollProgress - 0.4 - index * 0.05) * 40}px) rotateX(${(scrollProgress - 0.4) * 5}deg)`,
+                    opacity: Math.max(0.3, 1 - (scrollProgress - 0.4) * 2)
+                  }}
+                >
                   <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                   <div className="relative z-10">
                     <div className="w-20 h-20 mx-auto mb-8 bg-gradient-to-br from-gray-800 to-black rounded-2xl flex items-center justify-center group-hover:from-white/20 group-hover:to-gray-900/50 transition-all duration-700 shadow-lg">
@@ -615,7 +459,10 @@ export default function Component() {
             ))}
           </div>
 
-          <div className="text-center mt-20">
+          <div 
+            className="text-center mt-20"
+            style={{ transform: `translateY(${(scrollProgress - 0.5) * 50}px) scale(${1 + (scrollProgress - 0.5) * 0.1})` }}
+          >
             <Link href="/services">
               <Button
                 size="lg"
@@ -629,9 +476,12 @@ export default function Component() {
       </section>
 
       {/* Enhanced Testimonials Section */}
-      <section className="py-32 px-16 bg-gray-900/30">
+      <section className="py-32 px-16 relative">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-20">
+          <div 
+            className="text-center mb-20"
+            style={{ transform: `translateY(${(scrollProgress - 0.6) * 70}px) rotateZ(${(scrollProgress - 0.6) * 2}deg)` }}
+          >
             <Badge className="bg-white/20 text-white px-6 py-3 text-sm mb-8 rounded-full">
               Client Love
             </Badge>
@@ -642,11 +492,18 @@ export default function Component() {
             />
           </div>
 
-          <div className="grid md:grid-cols-3 gap-10">
+          <div 
+            className="grid md:grid-cols-3 gap-10"
+            style={{ transform: `translateY(${(scrollProgress - 0.7) * 60}px) perspective(1000px) rotateX(${(scrollProgress - 0.7) * 10}deg)` }}
+          >
             {testimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className="bg-gradient-to-br from-black/80 to-gray-900/60 border border-gray-700 hover:shadow-2xl hover:shadow-white/10 transition-all duration-500 hover:scale-105 p-10 rounded-2xl backdrop-blur-lg hover:border-white/30"
+                className="bg-black/90 border border-gray-700 hover:shadow-2xl hover:shadow-white/10 transition-all duration-500 hover:scale-105 p-10 rounded-2xl backdrop-blur-lg hover:border-white/30"
+                style={{ 
+                  transform: `translateY(${(scrollProgress - 0.7 - index * 0.1) * 30}px) rotateY(${index % 2 === 0 ? 5 : -5}deg)`,
+                  opacity: Math.max(0.4, 1 - (scrollProgress - 0.7) * 1.5)
+                }}
               >
                 <div className="flex mb-6">
                   {[...Array(testimonial.rating)].map((_, i) => (
@@ -667,8 +524,14 @@ export default function Component() {
       </section>
 
       {/* Enhanced CTA Section */}
-      <section className="py-32 px-16 bg-black">
-        <div className="max-w-5xl mx-auto text-center">
+      <section className="py-32 px-16 relative">
+        <div 
+          className="max-w-5xl mx-auto text-center"
+          style={{ 
+            transform: `translateY(${(scrollProgress - 0.8) * 80}px) scale(${1 + (scrollProgress - 0.8) * 0.2})`,
+            opacity: Math.max(0.2, 1 - (scrollProgress - 0.8) * 2)
+          }}
+        >
           <GlitchText 
             text="Ready to Transform Your Business?" 
             className="text-6xl font-black mb-10 block"
@@ -701,7 +564,7 @@ export default function Component() {
       </section>
 
       {/* Enhanced Footer */}
-      <footer className="bg-gray-900/50 text-white border-t border-gray-800">
+      <footer className="bg-black/90 text-white border-t border-gray-800 relative">
         <div className="max-w-7xl mx-auto px-6 py-12">
           <div className="grid md:grid-cols-3 gap-12 mb-12">
             <div className="text-center md:text-left">
