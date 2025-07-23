@@ -1,7 +1,7 @@
 "use client"
 
 import { Canvas } from "@react-three/fiber"
-import { Suspense, useRef, useEffect, useState } from "react"
+import { Suspense, useRef, useEffect, useState, createRef } from "react"
 import { 
   Environment, 
   Float, 
@@ -151,10 +151,10 @@ function FloatingGeometry({ customText = "G4U" }: FloatingGeometryProps) {
     }
 
     const materials = [
-      <meshStandardMaterial key="white" color="#ffffff" emissive="#ffffff" emissiveIntensity={0.1} roughness={0.1} metalness={0.8} />,
-      <meshStandardMaterial key="black" color="#000000" roughness={0.2} metalness={0.9} />,
-      <meshStandardMaterial key="gray" color="#666666" roughness={0.3} metalness={0.7} />,
-      <MeshDistortMaterial key="distort" color="#ffffff" emissive="#ffffff" emissiveIntensity={0.05} roughness={0.1} metalness={0.9} distort={0.2} speed={1} />
+      <meshStandardMaterial key={`white-${index}`} color="#ffffff" emissive="#ffffff" emissiveIntensity={0.1} roughness={0.1} metalness={0.8} />,
+      <meshStandardMaterial key={`black-${index}`} color="#000000" roughness={0.2} metalness={0.9} />,
+      <meshStandardMaterial key={`gray-${index}`} color="#666666" roughness={0.3} metalness={0.7} />,
+      <MeshDistortMaterial key={`distort-${index}`} color="#ffffff" emissive="#ffffff" emissiveIntensity={0.05} roughness={0.1} metalness={0.9} distort={0.2} speed={1} />
     ]
 
     const material = materials[index % materials.length]
@@ -162,7 +162,7 @@ function FloatingGeometry({ customText = "G4U" }: FloatingGeometryProps) {
     switch (type) {
       case 'sphere':
         return (
-          <Float key={index} speed={1.5 + index * 0.1} rotationIntensity={1 + index * 0.1} floatIntensity={2}>
+          <Float key={`sphere-${index}`} speed={1.5 + index * 0.1} rotationIntensity={1 + index * 0.1} floatIntensity={2}>
             <Sphere {...commonProps} args={[0.3 + (index % 3) * 0.1, 16, 16]}>
               {material}
             </Sphere>
@@ -170,7 +170,7 @@ function FloatingGeometry({ customText = "G4U" }: FloatingGeometryProps) {
         )
       case 'box':
         return (
-          <Float key={index} speed={1.8 + index * 0.1} rotationIntensity={1.2 + index * 0.1} floatIntensity={1.8}>
+          <Float key={`box-${index}`} speed={1.8 + index * 0.1} rotationIntensity={1.2 + index * 0.1} floatIntensity={1.8}>
             <Box {...commonProps} args={[0.5 + (index % 3) * 0.1, 0.5 + (index % 3) * 0.1, 0.5 + (index % 3) * 0.1]}>
               {material}
             </Box>
@@ -178,7 +178,7 @@ function FloatingGeometry({ customText = "G4U" }: FloatingGeometryProps) {
         )
       case 'torus':
         return (
-          <Float key={index} speed={2 + index * 0.1} rotationIntensity={1.5 + index * 0.1} floatIntensity={2.2}>
+          <Float key={`torus-${index}`} speed={2 + index * 0.1} rotationIntensity={1.5 + index * 0.1} floatIntensity={2.2}>
             <Torus {...commonProps} args={[0.4 + (index % 3) * 0.1, 0.15 + (index % 2) * 0.05, 8, 16]}>
               {material}
             </Torus>
@@ -186,7 +186,7 @@ function FloatingGeometry({ customText = "G4U" }: FloatingGeometryProps) {
         )
       case 'icosahedron':
         return (
-          <Float key={index} speed={1.7 + index * 0.1} rotationIntensity={1.3 + index * 0.1} floatIntensity={2}>
+          <Float key={`icosahedron-${index}`} speed={1.7 + index * 0.1} rotationIntensity={1.3 + index * 0.1} floatIntensity={2}>
             <Icosahedron {...commonProps} args={[0.4 + (index % 3) * 0.1]}>
               {material}
             </Icosahedron>
@@ -194,7 +194,7 @@ function FloatingGeometry({ customText = "G4U" }: FloatingGeometryProps) {
         )
       case 'octahedron':
         return (
-          <Float key={index} speed={2.1 + index * 0.1} rotationIntensity={1.4 + index * 0.1} floatIntensity={1.9}>
+          <Float key={`octahedron-${index}`} speed={2.1 + index * 0.1} rotationIntensity={1.4 + index * 0.1} floatIntensity={1.9}>
             <Octahedron {...commonProps} args={[0.35 + (index % 3) * 0.1]}>
               {material}
             </Octahedron>
@@ -202,7 +202,7 @@ function FloatingGeometry({ customText = "G4U" }: FloatingGeometryProps) {
         )
       case 'cone':
         return (
-          <Float key={index} speed={1.6 + index * 0.1} rotationIntensity={1.1 + index * 0.1} floatIntensity={2.1}>
+          <Float key={`cone-${index}`} speed={1.6 + index * 0.1} rotationIntensity={1.1 + index * 0.1} floatIntensity={2.1}>
             <Cone {...commonProps} args={[0.3 + (index % 3) * 0.1, 0.8 + (index % 2) * 0.2, 6]}>
               {material}
             </Cone>
@@ -210,7 +210,7 @@ function FloatingGeometry({ customText = "G4U" }: FloatingGeometryProps) {
         )
       case 'cylinder':
         return (
-          <Float key={index} speed={1.9 + index * 0.1} rotationIntensity={1.6 + index * 0.1} floatIntensity={1.7}>
+          <Float key={`cylinder-${index}`} speed={1.9 + index * 0.1} rotationIntensity={1.6 + index * 0.1} floatIntensity={1.7}>
             <Cylinder {...commonProps} args={[0.25 + (index % 3) * 0.1, 0.25 + (index % 3) * 0.1, 0.9 + (index % 2) * 0.2, 8]}>
               {material}
             </Cylinder>
@@ -218,7 +218,7 @@ function FloatingGeometry({ customText = "G4U" }: FloatingGeometryProps) {
         )
       case 'ring':
         return (
-          <Float key={index} speed={1.4 + index * 0.1} rotationIntensity={1.7 + index * 0.1} floatIntensity={2.3}>
+          <Float key={`ring-${index}`} speed={1.4 + index * 0.1} rotationIntensity={1.7 + index * 0.1} floatIntensity={2.3}>
             <Ring {...commonProps} args={[0.4 + (index % 3) * 0.1, 0.6 + (index % 2) * 0.1, 8]}>
               <meshStandardMaterial color="#888888" roughness={0.3} metalness={0.8} side={THREE.DoubleSide} />
             </Ring>
@@ -313,7 +313,7 @@ function BackgroundPlanes() {
     <>
       {[...Array(6)].map((_, index) => (
         <Plane 
-          key={index}
+          key={`bg-plane-${index}`}
           ref={(el) => { planeRefs.current[index] = el }}
           args={[25 + index * 5, 25 + index * 5]} 
           position={[
@@ -411,6 +411,8 @@ export function Enhanced3DBackground({
     Array.from({ length: particleCount }, () => createRef())
   )
 
+  const [animationPhase, setAnimationPhase] = useState(0)
+
   useFrame((state) => {
     const time = state.clock.getElapsedTime()
 
@@ -426,7 +428,7 @@ export function Enhanced3DBackground({
       setAnimationPhase(0) // Floating freely (4 seconds)
     }
 
-    particles.forEach((ref, index) => {
+    particles.current.forEach((ref, index) => {
       if (!ref.current) return
 
       if ((animationPhase === 1 || animationPhase === 2) && index < ALL_G4U_POSITIONS.length) {
@@ -487,6 +489,7 @@ export function Enhanced3DBackground({
       <Canvas 
         camera={{ position: [0, 0, 15], fov: 75 }}
         style={{ background: 'linear-gradient(180deg, #000000 0%, #111111 30%, #000000 60%, #111111 100%)' }}
+        gl={{ antialias: true, alpha: false }}
       >
         <Suspense fallback={null}>
           <Environment preset="night" />

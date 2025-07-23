@@ -1,126 +1,111 @@
-
 "use client"
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { ArrowRight, Menu, X } from "lucide-react"
-import Image from "next/image"
+
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { Menu, X } from "lucide-react"
+import { EditableImage } from "@/components/editable-image"
 
-export default function Navigation() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+export function Navigation() {
+  const [isOpen, setIsOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
   const pathname = usePathname()
 
-  const navigationItems = [
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50)
+    }
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  const navItems = [
     { href: "/", label: "Home" },
     { href: "/about", label: "About" },
     { href: "/services", label: "Services" },
     { href: "/portfolio", label: "Portfolio" },
-    { href: "/careers", label: "Careers" },
     { href: "/blog", label: "Blog" },
     { href: "/contact", label: "Contact" },
   ]
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
-
   return (
-    <nav className="bg-black/98 backdrop-blur-xl border-b border-gray-800/70 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-6 py-3">
-        <div className="flex items-center justify-between">
-          <Link href="/" className="flex items-center group">
-            <div className="relative">
-              <Image
-                src="/images/gumming4u-logo.png"
-                alt="Gumming4U - Digital Marketing Agency"
-                width={100}
-                height={40}
-                style={{ width: "auto", height: "auto" }}
-                className="transition-all duration-300 group-hover:scale-105 filter brightness-0 invert"
-                priority
-              />
-            </div>
+    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+      isScrolled ? "bg-black/80 backdrop-blur-md border-b border-white/10" : "bg-transparent"
+    }`}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-20">
+          {/* Logo */}
+          <Link href="/" className="flex-shrink-0">
+            <EditableImage
+              src="/images/gumming4u-logo.png"
+              alt="G4U Logo"
+              width={120}
+              height={40}
+              className="h-10 w-auto"
+              style={{ width: 'auto', height: '40px' }}
+            />
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
-            {navigationItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`font-medium text-sm tracking-wide transition-all duration-300 relative group ${
-                  pathname === item.href ? "text-white" : "text-gray-300 hover:text-white"
-                }`}
-              >
-                {item.label}
-                <div
-                  className={`absolute bottom-0 left-0 h-0.5 bg-white transition-all duration-300 ${
-                    pathname === item.href ? "w-full" : "w-0 group-hover:w-full"
-                  }`}
-                ></div>
-              </Link>
-            ))}
-          </div>
-
-          {/* Desktop CTA Button */}
-          <div className="hidden lg:flex items-center">
-            <a
-              href="https://wa.me/919551077771?text=Hi%20Gumming4U!%20I%27d%20like%20to%20schedule%20a%20call%20to%20discuss%20my%20digital%20marketing%20needs."
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button className="bg-white text-black hover:bg-gray-200 px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-300 hover:scale-105">
-                Schedule a Call
-                <ArrowRight className="ml-2 w-3 h-3" />
-              </Button>
-            </a>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <div className="lg:hidden">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={toggleMenu}
-              className="text-white hover:bg-white/10"
-            >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </Button>
-          </div>
-        </div>
-
-        {/* Mobile Navigation Menu */}
-        {isMenuOpen && (
-          <div className="lg:hidden mt-4 pb-4 border-t border-gray-800">
-            <div className="flex flex-col space-y-4 mt-4">
-              {navigationItems.map((item) => (
+          <div className="hidden md:block">
+            <div className="ml-10 flex items-baseline space-x-8">
+              {navItems.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={`font-medium text-sm tracking-wide transition-all duration-300 py-2 ${
-                    pathname === item.href ? "text-white" : "text-gray-300 hover:text-white"
+                  className={`px-3 py-2 text-sm font-medium transition-colors duration-300 ${
+                    pathname === item.href
+                      ? "text-white border-b-2 border-white"
+                      : "text-gray-300 hover:text-white hover:border-b-2 hover:border-white/50"
                   }`}
                 >
                   {item.label}
                 </Link>
               ))}
-              <div className="pt-4 border-t border-gray-800">
-                <a
-                  href="https://wa.me/919551077771?text=Hi%20Gumming4U!%20I%27d%20like%20to%20schedule%20a%20call%20to%20discuss%20my%20digital%20marketing%20needs."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  <Button className="w-full bg-white text-black hover:bg-gray-200 px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-300">
-                    Schedule a Call
-                    <ArrowRight className="ml-2 w-3 h-3" />
-                  </Button>
-                </a>
-              </div>
             </div>
           </div>
-        )}
+
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+              aria-expanded="false"
+            >
+              <span className="sr-only">Open main menu</span>
+              {isOpen ? (
+                <X className="block h-6 w-6" aria-hidden="true" />
+              ) : (
+                <Menu className="block h-6 w-6" aria-hidden="true" />
+              )}
+            </button>
+          </div>
+        </div>
       </div>
+
+      {/* Mobile menu */}
+      {isOpen && (
+        <div className="md:hidden">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-black/90 backdrop-blur-md border-b border-white/10">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`block px-3 py-2 text-base font-medium transition-colors duration-300 ${
+                  pathname === item.href
+                    ? "text-white bg-gray-900"
+                    : "text-gray-300 hover:text-white hover:bg-gray-700"
+                }`}
+                onClick={() => setIsOpen(false)}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </nav>
   )
 }
+
+export default Navigation
