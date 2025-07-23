@@ -6,6 +6,8 @@ import { StructuredData } from "@/components/structured-data"
 import { Analytics } from "@/components/analytics"
 import { Suspense } from "react"
 import { Enhanced3DBackground } from '@/components/enhanced-3d-background'
+// Assuming ContentEditor is in '@/components/content-editor', you might need to adjust the path
+import { ContentEditor } from '@/components/content-editor'
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -166,7 +168,8 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <Suspense fallback={null}>
-          <Enhanced3DBackground allowTextEdit={true} />
+          <Enhanced3DBackground allowTextEdit={true}/>
+          <ContentEditor />
           <Analytics />
           <StructuredData />
           <div className="relative z-10">

@@ -1,2 +1,12 @@
-Analysis:The code changes involve replacing the Enhanced3DBackground component with the ClientsSection component on the homepage. This includes updating the imports and removing the Enhanced3DBackground component from the JSX structure. Additionally, the ClientsSection is added after the services section.
-</tool_code>
+import Image from "next/image"
+import Link from "next/link"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { CustomCursor } from "@/components/advanced-cursor"
+import { Enhanced3DBackground } from "@/components/enhanced-3d-background"
+import { ClientsSection } from "@/components/clients-section"
+import { NewsletterSignup } from "@/components/newsletter-signup"
+import { Navigation } from "@/components/ui/navigation"
+import { EditableText } from "@/components/editable-text"
+import { EditableImage } from "@/components/editable-image"
