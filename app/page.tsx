@@ -1,7 +1,4 @@
 
-"use client"
-
-import React from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
@@ -15,10 +12,9 @@ import { Navigation } from "@/components/navigation"
 import { EditableText } from "@/components/editable-text"
 import { EditableImage } from "@/components/editable-image"
 
-export default function HomePage(): React.JSX.Element {
+export default function HomePage() {
   return (
-    <div className="min-h-screen bg-black text-white overflow-hidden relative" style={{ cursor: "none" }}>
-      <Enhanced3DBackground />
+    <div className="min-h-screen bg-black text-white overflow-hidden" style={{ cursor: "none" }}>
       <CustomCursor />
       <Navigation />
       
@@ -98,7 +94,6 @@ export default function HomePage(): React.JSX.Element {
                 height={400}
                 className="rounded-2xl"
                 priority
-                style={{ width: 'auto', height: 'auto' }}
               />
             </div>
           </div>
@@ -158,7 +153,7 @@ export default function HomePage(): React.JSX.Element {
               icon: "📊"
             }
           ].map((service, index) => (
-            <Card key={`service-${service.title}-${index}`} className="bg-white/10 border-white/20 backdrop-blur-sm hover:bg-white/20 transition-all group">
+            <Card key={`service-${index}`} className="bg-white/10 border-white/20 backdrop-blur-sm hover:bg-white/20 transition-all group">
               <CardContent className="p-8">
                 <div className="text-4xl mb-4">{service.icon}</div>
                 <h3 className="text-xl font-bold text-white mb-4">{service.title}</h3>
@@ -203,7 +198,6 @@ export default function HomePage(): React.JSX.Element {
                 height={40}
                 className="mb-4"
                 style={{ width: 'auto', height: '40px' }}
-                priority
               />
               <p className="text-gray-400">
                 <EditableText 
