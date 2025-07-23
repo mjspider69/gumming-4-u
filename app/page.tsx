@@ -12,14 +12,8 @@ import { Enhanced3DBackground } from "@/components/enhanced-3d-background"
 import { ClientsSection } from "@/components/clients-section"
 import { NewsletterSignup } from "@/components/newsletter-signup"
 import { Navigation } from "@/components/navigation"
-import React from "react"
 import { EditableText } from "@/components/editable-text"
 import { EditableImage } from "@/components/editable-image"
-import { Enhanced3DBackground } from "@/components/enhanced-3d-background"
-import { ClientsSection } from "@/components/clients-section"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import Image from "next/image"
 
 const HomePage: React.FC = () => {
   return (
