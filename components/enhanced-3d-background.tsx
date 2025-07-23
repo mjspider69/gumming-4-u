@@ -1,4 +1,3 @@
-
 "use client"
 
 import { Canvas } from "@react-three/fiber"
@@ -46,6 +45,12 @@ const G4U_POSITIONS = {
   ]
 }
 
+const ALL_G4U_POSITIONS = [
+  ...G4U_POSITIONS.G,
+  ...G4U_POSITIONS.Four,
+  ...G4U_POSITIONS.U
+]
+
 // Dispersed positions for floating animation
 const DISPERSED_POSITIONS = [
   [-8, 4, -3], [6, -2, -4], [-3, -3, -2], [7, 3, -5], [-6, -1, -3],
@@ -65,7 +70,7 @@ interface FloatingGeometryProps {
 function FloatingGeometry({ customText = "G4U" }: FloatingGeometryProps) {
   const geometryRefs = useRef<(THREE.Mesh | null)[]>([])
   const [animationPhase, setAnimationPhase] = useState(0) // 0: dispersed, 1: forming, 2: formed, 3: dispersing
-  
+
   // All geometry types for variety
   const geometryTypes = [
     'sphere', 'box', 'torus', 'icosahedron', 'octahedron', 
@@ -96,7 +101,7 @@ function FloatingGeometry({ customText = "G4U" }: FloatingGeometryProps) {
 
   useFrame((state) => {
     const time = state.clock.getElapsedTime()
-    
+
     geometryRefs.current.forEach((ref, index) => {
       if (!ref) return
 
@@ -109,10 +114,10 @@ function FloatingGeometry({ customText = "G4U" }: FloatingGeometryProps) {
         // Form G4U - move to formation positions
         const targetPos = allFormationPositions[index]
         const currentPos = ref.position
-        
+
         const lerpSpeed = animationPhase === 1 ? 0.03 : 0.01 // Faster when forming, slower when formed
         currentPos.lerp(new THREE.Vector3(targetPos[0], targetPos[1], targetPos[2]), lerpSpeed)
-        
+
         // Add subtle floating movement while in formation
         if (animationPhase === 2) {
           ref.position.y += Math.sin(time * 0.5 + index) * 0.01
@@ -122,7 +127,7 @@ function FloatingGeometry({ customText = "G4U" }: FloatingGeometryProps) {
         // Disperse - move to floating positions
         const targetPos = DISPERSED_POSITIONS[index % DISPERSED_POSITIONS.length]
         const currentPos = ref.position
-        
+
         const lerpSpeed = animationPhase === 3 ? 0.03 : 0.01 // Faster when dispersing
         currentPos.lerp(new THREE.Vector3(
           targetPos[0] + Math.sin(time * 0.2 + index) * 2,
@@ -239,16 +244,16 @@ function ParticleField() {
   useFrame((state) => {
     if (particlesRef.current) {
       particlesRef.current.rotation.y = state.clock.getElapsedTime() * 0.02
-      
+
       if (positionsRef.current) {
         const positions = positionsRef.current
         const time = state.clock.getElapsedTime()
-        
+
         for (let i = 0; i < positions.length; i += 3) {
           positions[i + 1] += Math.sin(time * 0.5 + i) * 0.002
           positions[i] += Math.cos(time * 0.3 + i) * 0.001
         }
-        
+
         particlesRef.current.geometry.attributes.position.needsUpdate = true
       }
     }
@@ -297,7 +302,7 @@ function BackgroundPlanes() {
         planeRef.rotation.z = Math.sin(time * 0.1 + index) * 0.05
         planeRef.rotation.x = Math.cos(time * 0.08 + index) * 0.03
         planeRef.rotation.y = Math.sin(time * 0.12 + index) * 0.02
-        
+
         planeRef.position.z = -15 + Math.sin(time * 0.05 + index) * 5
         planeRef.material.opacity = 0.03 + Math.sin(time * 0.1 + index) * 0.02
       }
@@ -399,6 +404,83 @@ export function Enhanced3DBackground({
   allowTextEdit = false
 }: Enhanced3DBackgroundProps) {
   const [customText, setCustomText] = useState(text)
+
+  // Create particle references - ensure we have enough for G4U formation
+  const particleCount = Math.max(120, ALL_G4U_POSITIONS.length + 20)
+  const particles = useRef(
+    Array.from({ length: particleCount }, () => createRef())
+  )
+
+  useFrame((state) => {
+    const time = state.clock.getElapsedTime()
+
+    // Update animation phases with timing (every 15 seconds cycle)
+    const cycleTime = time % 15
+    if (cycleTime < 4) {
+      setAnimationPhase(1) // Forming G4U (4 seconds)
+    } else if (cycleTime < 8) {
+      setAnimationPhase(2) // Holding G4U formation (4 seconds)
+    } else if (cycleTime < 11) {
+      setAnimationPhase(3) // Dispersing (3 seconds)
+    } else {
+      setAnimationPhase(0) // Floating freely (4 seconds)
+    }
+
+    particles.forEach((ref, index) => {
+      if (!ref.current) return
+
+      if ((animationPhase === 1 || animationPhase === 2) && index < ALL_G4U_POSITIONS.length) {
+        // Form G4U - move to formation positions
+        const targetPos = ALL_G4U_POSITIONS[index]
+        const currentPos = ref.current.position
+
+        const lerpSpeed = animationPhase === 1 ? 0.04 : 0.008 // Faster when forming, slower when formed
+        currentPos.lerp(new THREE.Vector3(targetPos[0], targetPos[1], targetPos[2]), lerpSpeed)
+
+        // Add subtle floating movement while in formation
+        if (animationPhase === 2) {
+          ref.current.position.y += Math.sin(time * 0.5 + index) * 0.008
+          ref.current.position.x += Math.cos(time * 0.3 + index) * 0.004
+        }
+
+        // Change color when in formation
+        if (ref.current.material) {
+          const targetColor = new THREE.Color(0.2 + Math.sin(time + index) * 0.3, 0.8, 0.9)
+          ref.current.material.color.lerp(targetColor, 0.05)
+        }
+      } else {
+        // Disperse - move to floating positions
+        const dispersedIndex = index % DISPERSED_POSITIONS.length
+        const targetPos = DISPERSED_POSITIONS[dispersedIndex]
+        const currentPos = ref.current.position
+
+        const lerpSpeed = animationPhase === 3 ? 0.04 : 0.015 // Faster when dispersing
+        const floatingOffset = new THREE.Vector3(
+          targetPos[0] + Math.sin(time * 0.2 + index) * 3,
+          targetPos[1] + Math.cos(time * 0.3 + index) * 2,
+          targetPos[2] + Math.sin(time * 0.15 + index) * 1.5
+        )
+        currentPos.lerp(floatingOffset, lerpSpeed)
+
+        // Reset color when dispersed
+        if (ref.current.material) {
+          const targetColor = new THREE.Color(0.8, 0.8, 0.8)
+          ref.current.material.color.lerp(targetColor, 0.02)
+        }
+      }
+
+      // Scale animation based on phase
+      const scaleTarget = (animationPhase === 1 || animationPhase === 2) ? 
+        0.6 + Math.sin(time * 2 + index) * 0.2 : 
+        0.8 + Math.sin(time + index) * 0.3
+
+      ref.current.scale.lerp(new THREE.Vector3(scaleTarget, scaleTarget, scaleTarget), 0.08)
+
+      // Rotation animation
+      ref.current.rotation.x += 0.01 + Math.sin(time + index) * 0.005
+      ref.current.rotation.y += 0.008 + Math.cos(time + index) * 0.003
+    })
+  })
 
   return (
     <div className="fixed inset-0 z-0">
