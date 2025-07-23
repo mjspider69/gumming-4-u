@@ -5,6 +5,7 @@ import "./globals.css"
 import { StructuredData } from "@/components/structured-data"
 import { Analytics } from "@/components/analytics"
 import { Suspense } from "react"
+import { Enhanced3DBackground } from '@/components/enhanced-3d-background'
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -165,9 +166,12 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <Suspense fallback={null}>
-          {children}
-          <StructuredData />
+          <Enhanced3DBackground allowTextEdit={true} />
           <Analytics />
+          <StructuredData />
+          <div className="relative z-10">
+            {children}
+          </div>
         </Suspense>
       </body>
     </html>

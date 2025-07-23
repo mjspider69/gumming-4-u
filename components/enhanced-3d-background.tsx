@@ -59,12 +59,12 @@ const DISPERSED_POSITIONS = [
 ]
 
 interface FloatingGeometryProps {
-  scrollProgress: number
-  isFormed: boolean
+  customText?: string
 }
 
-function FloatingGeometry({ scrollProgress, isFormed }: FloatingGeometryProps) {
+function FloatingGeometry({ customText = "G4U" }: FloatingGeometryProps) {
   const geometryRefs = useRef<(THREE.Mesh | null)[]>([])
+  const [animationPhase, setAnimationPhase] = useState(0) // 0: dispersed, 1: forming, 2: formed, 3: dispersing
   
   // All geometry types for variety
   const geometryTypes = [
@@ -82,6 +82,18 @@ function FloatingGeometry({ scrollProgress, isFormed }: FloatingGeometryProps) {
     ...G4U_POSITIONS.U
   ]
 
+  // Animation loop timer
+  useEffect(() => {
+    const animationInterval = setInterval(() => {
+      setAnimationPhase((prev) => {
+        const nextPhase = (prev + 1) % 4
+        return nextPhase
+      })
+    }, 4000) // Change phase every 4 seconds
+
+    return () => clearInterval(animationInterval)
+  }, [])
+
   useFrame((state) => {
     const time = state.clock.getElapsedTime()
     
@@ -93,30 +105,36 @@ function FloatingGeometry({ scrollProgress, isFormed }: FloatingGeometryProps) {
       ref.rotation.y += 0.005 * (1 + index * 0.05)
       ref.rotation.z += 0.008 * (1 + index * 0.08)
 
-      if (isFormed && index < allFormationPositions.length) {
+      if ((animationPhase === 1 || animationPhase === 2) && index < allFormationPositions.length) {
         // Form G4U - move to formation positions
         const targetPos = allFormationPositions[index]
         const currentPos = ref.position
         
-        currentPos.lerp(new THREE.Vector3(targetPos[0], targetPos[1], targetPos[2]), 0.02)
+        const lerpSpeed = animationPhase === 1 ? 0.03 : 0.01 // Faster when forming, slower when formed
+        currentPos.lerp(new THREE.Vector3(targetPos[0], targetPos[1], targetPos[2]), lerpSpeed)
         
         // Add subtle floating movement while in formation
-        ref.position.y += Math.sin(time * 0.5 + index) * 0.01
-        ref.position.x += Math.cos(time * 0.3 + index) * 0.005
+        if (animationPhase === 2) {
+          ref.position.y += Math.sin(time * 0.5 + index) * 0.01
+          ref.position.x += Math.cos(time * 0.3 + index) * 0.005
+        }
       } else {
         // Disperse - move to floating positions
         const targetPos = DISPERSED_POSITIONS[index % DISPERSED_POSITIONS.length]
         const currentPos = ref.position
         
+        const lerpSpeed = animationPhase === 3 ? 0.03 : 0.01 // Faster when dispersing
         currentPos.lerp(new THREE.Vector3(
           targetPos[0] + Math.sin(time * 0.2 + index) * 2,
           targetPos[1] + Math.cos(time * 0.3 + index) * 1.5,
           targetPos[2] + Math.sin(time * 0.15 + index) * 1
-        ), 0.01)
+        ), lerpSpeed)
       }
 
-      // Scale animation based on scroll
-      const scaleTarget = isFormed ? 0.8 + Math.sin(time + index) * 0.1 : 1 + Math.sin(time + index) * 0.2
+      // Scale animation based on phase
+      const scaleTarget = (animationPhase === 1 || animationPhase === 2) ? 
+        0.8 + Math.sin(time + index) * 0.1 : 
+        1 + Math.sin(time + index) * 0.2
       ref.scale.lerp(new THREE.Vector3(scaleTarget, scaleTarget, scaleTarget), 0.05)
     })
   })
@@ -213,8 +231,8 @@ function FloatingGeometry({ scrollProgress, isFormed }: FloatingGeometryProps) {
   )
 }
 
-// Enhanced particle system with G4U formation capability
-function ParticleField({ scrollProgress, isFormed }: { scrollProgress: number; isFormed: boolean }) {
+// Enhanced particle system
+function ParticleField() {
   const particlesRef = useRef<THREE.Points>(null)
   const positionsRef = useRef<Float32Array>()
 
@@ -227,7 +245,6 @@ function ParticleField({ scrollProgress, isFormed }: { scrollProgress: number; i
         const time = state.clock.getElapsedTime()
         
         for (let i = 0; i < positions.length; i += 3) {
-          // Add wave motion to particles
           positions[i + 1] += Math.sin(time * 0.5 + i) * 0.002
           positions[i] += Math.cos(time * 0.3 + i) * 0.001
         }
@@ -268,8 +285,8 @@ function ParticleField({ scrollProgress, isFormed }: { scrollProgress: number; i
   )
 }
 
-// Background planes with enhanced animation
-function BackgroundPlanes({ scrollProgress }: { scrollProgress: number }) {
+// Background planes
+function BackgroundPlanes() {
   const planeRefs = useRef<(THREE.Mesh | null)[]>([])
 
   useFrame((state) => {
@@ -281,9 +298,8 @@ function BackgroundPlanes({ scrollProgress }: { scrollProgress: number }) {
         planeRef.rotation.x = Math.cos(time * 0.08 + index) * 0.03
         planeRef.rotation.y = Math.sin(time * 0.12 + index) * 0.02
         
-        // Move planes based on scroll
-        planeRef.position.z = -15 + scrollProgress * 5
-        planeRef.material.opacity = 0.05 + scrollProgress * 0.03
+        planeRef.position.z = -15 + Math.sin(time * 0.05 + index) * 5
+        planeRef.material.opacity = 0.03 + Math.sin(time * 0.1 + index) * 0.02
       }
     })
   })
@@ -314,26 +330,75 @@ function BackgroundPlanes({ scrollProgress }: { scrollProgress: number }) {
   )
 }
 
+// Text Editor Component
+function TextEditor({ onTextChange, currentText }: { onTextChange: (text: string) => void; currentText: string }) {
+  const [isEditing, setIsEditing] = useState(false)
+  const [text, setText] = useState(currentText)
+
+  const handleSave = () => {
+    onTextChange(text)
+    setIsEditing(false)
+  }
+
+  return (
+    <div className="absolute top-4 right-4 z-50">
+      {isEditing ? (
+        <div className="bg-black/80 backdrop-blur-sm p-4 rounded-lg border border-white/20">
+          <input
+            type="text"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            className="bg-transparent border border-white/30 rounded px-3 py-2 text-white focus:outline-none focus:border-white/60"
+            placeholder="Enter custom text"
+            maxLength={10}
+          />
+          <div className="flex gap-2 mt-2">
+            <button
+              onClick={handleSave}
+              className="px-3 py-1 bg-white text-black rounded text-sm hover:bg-gray-200 transition-colors"
+            >
+              Save
+            </button>
+            <button
+              onClick={() => setIsEditing(false)}
+              className="px-3 py-1 bg-transparent border border-white/30 text-white rounded text-sm hover:border-white/60 transition-colors"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      ) : (
+        <button
+          onClick={() => setIsEditing(true)}
+          className="bg-black/60 backdrop-blur-sm p-2 rounded-lg border border-white/20 text-white hover:bg-black/80 transition-colors"
+          title="Edit Text"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+          </svg>
+        </button>
+      )}
+    </div>
+  )
+}
+
 // Main Enhanced 3D Background Component
 interface Enhanced3DBackgroundProps {
   variant?: 'default' | 'minimal' | 'complex'
   showText?: boolean
   text?: string
   scrollProgress?: number
+  allowTextEdit?: boolean
 }
 
 export function Enhanced3DBackground({ 
   variant = 'complex', 
   showText = false, 
   text = "G4U",
-  scrollProgress = 0
+  scrollProgress = 0,
+  allowTextEdit = false
 }: Enhanced3DBackgroundProps) {
-  const [isFormed, setIsFormed] = useState(false)
-
-  useEffect(() => {
-    // Form G4U when scroll is between 0.1 and 0.4, disperse otherwise
-    setIsFormed(scrollProgress > 0.1 && scrollProgress < 0.4)
-  }, [scrollProgress])
+  const [customText, setCustomText] = useState(text)
 
   return (
     <div className="fixed inset-0 z-0">
@@ -342,7 +407,6 @@ export function Enhanced3DBackground({
         style={{ background: 'linear-gradient(180deg, #000000 0%, #111111 30%, #000000 60%, #111111 100%)' }}
       >
         <Suspense fallback={null}>
-          {/* Enhanced Environment and Lighting */}
           <Environment preset="night" />
           <ambientLight intensity={0.2} />
           <pointLight position={[15, 15, 15]} intensity={0.8} color="#ffffff" />
@@ -357,7 +421,6 @@ export function Enhanced3DBackground({
             color="#ffffff"
           />
 
-          {/* Enhanced Stars Background */}
           <Stars 
             radius={200} 
             depth={100} 
@@ -368,37 +431,30 @@ export function Enhanced3DBackground({
             speed={0.5} 
           />
 
-          {/* Animated Background Planes */}
-          <BackgroundPlanes scrollProgress={scrollProgress} />
+          <BackgroundPlanes />
+          <ParticleField />
+          <FloatingGeometry customText={customText} />
 
-          {/* Enhanced Particle Field */}
-          <ParticleField scrollProgress={scrollProgress} isFormed={isFormed} />
-
-          {/* Main G4U Formation Geometry */}
-          <FloatingGeometry scrollProgress={scrollProgress} isFormed={isFormed} />
-
-          {/* Optional 3D Text */}
           {showText && (
             <Float speed={1.2} rotationIntensity={0.5} floatIntensity={0.8}>
               <Text3D 
                 font="/fonts/Geist_Bold.json" 
-                size={isFormed ? 1.5 : 0.8} 
+                size={1.2} 
                 height={0.2} 
-                position={isFormed ? [0, 3, 2] : [-2, 0, 2]}
+                position={[0, 3.5, 2]}
               >
-                {text}
+                {customText}
                 <meshStandardMaterial 
                   color="#ffffff" 
                   roughness={0.1} 
                   metalness={0.9}
                   emissive="#ffffff"
-                  emissiveIntensity={isFormed ? 0.15 : 0.05}
+                  emissiveIntensity={0.1}
                 />
               </Text3D>
             </Float>
           )}
 
-          {/* Enhanced Camera Controls */}
           <OrbitControls 
             enableZoom={false} 
             enablePan={false} 
@@ -409,6 +465,13 @@ export function Enhanced3DBackground({
           />
         </Suspense>
       </Canvas>
+
+      {allowTextEdit && (
+        <TextEditor 
+          onTextChange={setCustomText} 
+          currentText={customText}
+        />
+      )}
     </div>
   )
 }
