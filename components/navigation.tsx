@@ -47,22 +47,23 @@ export function Navigation() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`text-white hover:text-emerald-400 transition-all duration-300 font-medium relative group ${
-                pathname === item.href
-                  ? "text-white border-b-2 border-white"
-                  : "text-gray-300 hover:text-white hover:border-b-2 hover:border-white/50"
-              }`}
-            >
-              {item.label}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-emerald-400 to-teal-400 group-hover:w-full transition-all duration-300"></span>
-            </Link>
-          ))}
-</nav>
+          <div className="hidden md:block">
+            <div className="ml-10 flex items-baseline space-x-8">
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`px-3 py-2 text-sm font-medium transition-colors duration-300 ${
+                    pathname === item.href
+                      ? "text-white border-b-2 border-white"
+                      : "text-gray-300 hover:text-white hover:border-b-2 hover:border-white/50"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+          </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden">

@@ -281,7 +281,7 @@ export default function ServicesPage() {
 
   return (
     <div className="min-h-screen bg-black text-white" style={{ cursor: "none" }}>
-      <Enhanced3DBackground variant="complex" />
+      <Enhanced3DBackground />
       <CustomCursor />
       <Navigation />
 

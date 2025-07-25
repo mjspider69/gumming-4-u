@@ -559,9 +559,10 @@ textarea:focus-visible {
   z-index: -1;
 }
 
-/* Enhanced animations */
+/* Subtle pulsing effect for the trigger word */
 @keyframes subtle-pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -569,141 +570,8 @@ textarea:focus-visible {
   }
 }
 
-@keyframes glow-pulse {
-  0%, 100% {
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
-  }
-  50% {
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4), 0 0 30px rgba(16, 185, 129, 0.3);
-  }
-}
-
-@keyframes float-up {
-  0% {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes scale-in {
-  0% {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -200% center;
-  }
-  100% {
-    background-position: 200% center;
-  }
-}
-
 .pulse-on-hover:hover {
   animation: subtle-pulse 2s ease-in-out infinite;
-}
-
-.glow-effect {
-  animation: glow-pulse 3s ease-in-out infinite;
-}
-
-.float-animation {
-  animation: float-up 0.8s ease-out forwards;
-}
-
-.scale-animation {
-  animation: scale-in 0.6s ease-out forwards;
-}
-
-.shimmer-effect {
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  background-size: 200% 100%;
-  animation: shimmer 2s infinite;
-}
-
-/* Enhanced button effects */
-.btn-extraordinary {
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(45deg, #10b981, #14b8a6);
-  transition: all 0.3s ease;
-}
-
-.btn-extraordinary::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transition: left 0.6s ease;
-}
-
-.btn-extraordinary:hover::before {
-  left: 100%;
-}
-
-.btn-extraordinary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
-}
-
-/* Advanced card hover effects */
-.card-extraordinary {
-  position: relative;
-  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.card-extraordinary::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(45deg, rgba(16, 185, 129, 0.1), rgba(20, 184, 166, 0.1));
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  border-radius: inherit;
-}
-
-.card-extraordinary:hover::before {
-  opacity: 1;
-}
-
-.card-extraordinary:hover {
-  transform: translateY(-8px) rotateX(5deg);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(16, 185, 129, 0.2);
-}
-
-/* Text gradient effects */
-.text-gradient-extraordinary {
-  background: linear-gradient(45deg, #ffffff, #10b981, #14b8a6, #ffffff);
-  background-size: 300% 300%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradient-shift 4s ease-in-out infinite;
-}
-
-@keyframes gradient-shift {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
 }
 
 /* Scroll line animation */
