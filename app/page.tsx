@@ -26,6 +26,23 @@ export default function HomePage() {
               ✨ Welcome to G4U Digital Universe ✨
             </Badge>
             
+            {/* From Ordinary to Extraordinary */}
+            <div className="mb-12">
+              <div className="flex items-center justify-center gap-8 mb-8">
+                <span className="text-4xl md:text-6xl font-light text-gray-400 opacity-60">
+                  FROM ORDINARY
+                </span>
+                <div className="flex flex-col items-center">
+                  <div className="w-12 h-1 bg-gradient-to-r from-gray-400 to-emerald-400 rounded-full mb-2"></div>
+                  <span className="text-emerald-400 text-xl">✨</span>
+                  <div className="w-12 h-1 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full mt-2"></div>
+                </div>
+                <span className="text-4xl md:text-6xl font-black bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">
+                  TO EXTRAORDINARY
+                </span>
+              </div>
+            </div>
+            
             {/* Animated G4U Logo Text */}
             <div className="mb-8">
               <h1 className="text-8xl md:text-9xl font-black mb-4 bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent animate-pulse">
@@ -44,7 +61,7 @@ export default function HomePage() {
           
           <p className="text-2xl text-gray-300 max-w-4xl mx-auto mb-16 leading-relaxed">
             <EditableText 
-              defaultText="We transform brands with cutting-edge digital strategies, innovative design solutions, and data-driven marketing campaigns that deliver extraordinary results."
+              defaultText="We elevate ordinary businesses into extraordinary brands through cutting-edge digital strategies, innovative design solutions, and data-driven marketing campaigns that deliver transformational results."
               className="text-gray-300"
             />
           </p>
