@@ -6,7 +6,6 @@ import { StructuredData } from "@/components/structured-data"
 import { Analytics } from "@/components/analytics"
 import { Enhanced3DBackground } from "@/components/enhanced-3d-background"
 import { ContentEditor } from "@/components/content-editor"
-import { Chatbot } from "@/components/chatbot"
 import { Suspense } from "react"
 
 const inter = Inter({ 
@@ -107,7 +106,6 @@ export default function RootLayout({
           <ContentEditor />
           <Analytics />
           <StructuredData />
-          <Chatbot />
           <div className="relative z-10">
             {children}
           </div>
